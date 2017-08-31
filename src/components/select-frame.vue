@@ -1,4 +1,5 @@
 <script>
+import store from "../store.js";
 import frames from "../data/frames.json";
 import frame from "./frame.vue";
 import { groupBy, nameSort } from "../util.js";
@@ -34,6 +35,7 @@ frames.forEach(frame => frame.mountsText = generateMountsText(frame.mounts));
 
 export default {
 	name: "selectFrame",
+	store,
 	data () {
 		return {
 			frames: frames.sort(nameSort),
@@ -42,8 +44,17 @@ export default {
 				groupKey: "size",
 				sortKey: "cost",
 			}),
-			selectedFrame: null,
 		};
+	},
+	computed: {
+		selectedFrame: function () {
+			return this.$store.state.currentShip.frame;
+		},
+	},
+	methods: {
+		chooseFrame(frame) {
+			this.$store.dispatch("SET_FRAME", frame);
+		},
 	},
 	components: {
 		frame,
@@ -57,6 +68,10 @@ export default {
 			variant="secondary"
 			v-b-modal.options-modal
 		>Select a frame</b-button>
+		<frame
+			v-if="selectedFrame"
+			:frame="selectedFrame"
+		></frame>
 
 		<b-modal
 			id="options-modal"
@@ -71,7 +86,11 @@ export default {
 				>
 					<div
 						class="select-frame--frame-option"
+						:class="{
+							'select-frame--frame-option__active': frame.name === selectedFrame.name
+						}"
 						v-for="frame in framesOfSize"
+						@click="chooseFrame(frame)"
 					>
 						<frame :frame="frame">
 						</frame>
@@ -85,4 +104,18 @@ export default {
 </template>
 
 <style lang="scss">
+.select-frame {
+	.select-frame--frame-option {
+		cursor: pointer;
+		padding: 5px;
+
+		&:hover {
+			background-color: #ddd;
+		}
+
+		&.select-frame--frame-option__active {
+			background-color: #cfc;
+		}
+	}
+}
 </style>

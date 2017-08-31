@@ -24,10 +24,6 @@ export default {
 			<div class="frame--name">
 				{{ frame.name }}
 			</div>
-			<b-button
-				variant="primary"
-				class="frame--select-button"
-			>Select</b-button>
 		</div>
 		<div class="frame--info-line">
 			<span class="frame--info-name">Size</span>
@@ -75,17 +71,13 @@ export default {
 		background-color: #000;
 		color: #fff;
 		margin-top: 10px;
-		display: flex;
 		padding: 10px;
-		justify-content: space-between;
-		align-items: center;
 	}
 
 	.frame--name {
 		text-transform: uppercase;
 		padding-left: 5px;
 		font-weight: bold;
-		font-size: 1.2em;
 	}
 
 	.frame--info-name {
