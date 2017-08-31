@@ -6,7 +6,10 @@
     "baseHp": 20,
     "hpIncrement": 5,
     "damageThreshold": 0,
-    "mountsText": "forward arc (1 light) aft arc (1 light)",
+    "mounts": {
+        "forward": [1],
+        "aft": [1]
+    },
     "expansionBays": 0,
     "minCrew": 1,
     "maxCrew": 1,
@@ -19,7 +22,9 @@
     "baseHp": 30,
     "hpIncrement": 5,
     "damageThreshold": 0,
-    "mountsText": "forward arc (2 light)",
+    "mounts": {
+        "forward": [1, 1]
+    },
     "expansionBays": 0,
     "minCrew": 1,
     "maxCrew": 1,
@@ -32,8 +37,12 @@
     "baseHp": 35,
     "hpIncrement": 5,
     "damageThreshold": 0,
-    "mountsText": "forward arc (2 light [1 must be a tracking weapon]) aft arc (1 light)",
+    "mounts": {
+        "forward": [1, 1],
+        "aft": [1]
+    },
     "expansionBays": 0,
+    "restrictions": "1 front weapon mount may only be a tracking weapon",
     "minCrew": 1,
     "maxCrew": 2,
     "cost": 8
@@ -45,7 +54,9 @@
     "baseHp": 35,
     "hpIncrement": 5,
     "damageThreshold": 0,
-    "mountsText": "forward arc (1 light)",
+    "mounts": {
+        "forward": [1]
+    },
     "expansionBays": 3,
     "minCrew": 1,
     "maxCrew": 4,
@@ -58,7 +69,11 @@
     "baseHp": 40,
     "hpIncrement": 10,
     "damageThreshold": 0,
-    "mountsText": "forward arc (2 light) port arc (1 light) starboard arc (1 light)",
+    "mounts": {
+        "forward": [1, 1],
+        "port": [1],
+        "starboard": [1]
+    },
     "expansionBays": 3,
     "minCrew": 1,
     "maxCrew": 6,
@@ -71,7 +86,12 @@
     "baseHp": 55,
     "hpIncrement": 10,
     "damageThreshold": 0,
-    "mountsText": "forward arc (1 light) port arc (1 light) starboard arc (1 light) turret (1 light)",
+    "mounts": {
+        "forward": [1],
+        "port": [1],
+        "starboard": [1],
+        "turret": [1]
+    },
     "expansionBays": 4,
     "minCrew": 1,
     "maxCrew": 6,
@@ -84,7 +104,11 @@
     "baseHp": 70,
     "hpIncrement": 15,
     "damageThreshold": 0,
-    "mountsText": "forward arc (1 heavy, 1 light) aft arc (1 light) turret (2 light)",
+    "mounts": {
+        "forward": [2, 1],
+        "aft": [1],
+        "turret": [1, 1]
+    },
     "expansionBays": 5,
     "minCrew": 1,
     "maxCrew": 6,
@@ -97,7 +121,13 @@
     "baseHp": 150,
     "hpIncrement": 20,
     "damageThreshold": 0,
-    "mountsText": "forward arc (2 heavy) port arc (1 light) starboard arc (1 light) aft arc (1 light) turret (1 light)",
+    "mounts": {
+        "forward": [2, 2],
+        "port": [1],
+        "starboard": [1],
+        "aft": [1],
+        "turret": [1]
+    },
     "expansionBays": 4,
     "minCrew": 6,
     "maxCrew": 20,
@@ -110,7 +140,11 @@
     "baseHp": 120,
     "hpIncrement": 20,
     "damageThreshold": 0,
-    "mountsText": "forward arc (1 heavy, 2 light) port arc (1 heavy) starboard arc (1 heavy)",
+    "mounts": {
+        "forward": [2, 1, 1],
+        "port": [1],
+        "starboard": [1]
+    },
     "expansionBays": 8,
     "minCrew": 6,
     "maxCrew": 20,
@@ -123,7 +157,11 @@
     "baseHp": 160,
     "hpIncrement": 20,
     "damageThreshold": 5,
-    "mountsText": "forward arc (1 heavy) aft arc (1 heavy) turret (2 light)",
+    "mounts": {
+        "forward": [2],
+        "aft": [2],
+        "turret": [1, 1]
+    },
     "expansionBays": 10,
     "minCrew": 20,
     "maxCrew": 50,
@@ -136,7 +174,12 @@
     "baseHp": 180,
     "hpIncrement": 25,
     "damageThreshold": 5,
-    "mountsText": "forward arc (1 capital) port arc (1 light) starboard arc (1 light) turret (1 heavy)",
+    "mounts": {
+        "forward": [3],
+        "port": [1],
+        "starboard": [1],
+        "turret": [2]
+    },
     "expansionBays": 6,
     "minCrew": 20,
     "maxCrew": 100,
@@ -149,7 +192,12 @@
     "baseHp": 240,
     "hpIncrement": 30,
     "damageThreshold": 10,
-    "mountsText": "forward arc (1 capital) port arc (3 heavy) starboard arc (3 heavy) turret (2 light)",
+    "mounts": {
+        "forward": [3],
+        "port": [2, 2, 2],
+        "starboard": [2, 2, 2],
+        "turret": [1, 1]
+    },
     "expansionBays": 10,
     "restrictions": "Must have at least one hangar",
     "minCrew": 75,
@@ -163,7 +211,13 @@
     "baseHp": 280,
     "hpIncrement": 40,
     "damageThreshold": 10,
-    "mountsText": "forward arc (1 capital, 2 heavy) port arc (2 heavy, 1 light) starboard arc (2 heavy, 1 light) aft arc (1 light) turret (2 heavy)",
+    "mounts": {
+        "forward": [3, 2, 2],
+        "port": [2, 2, 1],
+        "starboard": [2, 2, 1],
+        "aft": [1],
+        "turret": [2, 2]
+    },
     "expansionBays": 8,
     "minCrew": 100,
     "maxCrew": 300,
@@ -176,7 +230,12 @@
     "baseHp": 400,
     "hpIncrement": 50,
     "damageThreshold": 15,
-    "mountsText": "forward arc (2 capital, 2 heavy) port arc (1 capital, 3 heavy) starboard arc (1 capital, 3 heavy) turret (4 light)",
+    "mounts": {
+        "forward": [3, 3],
+        "port": [3, 2, 2, 2],
+        "starboard": [3, 2, 2, 2],
+        "turret": [1, 1, 1, 1]
+    },
     "expansionBays": 20,
     "minCrew": 125,
     "maxCrew": 500,
