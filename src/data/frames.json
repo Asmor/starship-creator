@@ -231,7 +231,7 @@
     "hpIncrement": 50,
     "damageThreshold": 15,
     "mounts": {
-        "forward": [3, 3],
+        "forward": [3, 3, 2, 2],
         "port": [3, 2, 2, 2],
         "starboard": [3, 2, 2, 2],
         "turret": [1, 1, 1, 1]
