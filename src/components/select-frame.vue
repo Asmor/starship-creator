@@ -107,7 +107,7 @@ export default {
 .select-frame {
 	.select-frame--frame-option {
 		cursor: pointer;
-		padding: 5px;
+		padding: 10px;
 
 		&:hover {
 			background-color: #ddd;
