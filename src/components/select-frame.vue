@@ -65,13 +65,20 @@ export default {
 <template>
 	<div class="select-frame">
 		<b-button
+			v-if="!selectedFrame"
 			variant="secondary"
 			v-b-modal.options-modal
 		>Select a frame</b-button>
-		<frame
+
+		<div
+			class="select-frame--frame"
 			v-if="selectedFrame"
-			:frame="selectedFrame"
-		></frame>
+			v-b-modal.options-modal
+		>
+			<frame
+				:frame="selectedFrame"
+			></frame>
+		</div>
 
 		<b-modal
 			id="options-modal"
@@ -105,13 +112,18 @@ export default {
 
 <style lang="scss">
 .select-frame {
+	.select-frame--frame,
 	.select-frame--frame-option {
 		cursor: pointer;
-		padding: 10px;
 
 		&:hover {
 			background-color: #ddd;
 		}
+
+	}
+
+	.select-frame--frame-option {
+		padding: 10px;
 
 		&.select-frame--frame-option__active {
 			background-color: #cfc;
