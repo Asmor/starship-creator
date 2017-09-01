@@ -20,7 +20,6 @@ function groupBy({ collection, groupKey, sortKey }) {
 	}
 
 	const sorter = sortBy(sortKey);
-	console.log(sorter.toString());
 
 	Object.keys(out).forEach(outKey => out[outKey].sort(sorter));
 

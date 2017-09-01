@@ -1,5 +1,5 @@
 <script>
-import store from "../store.js";
+import { store, SET_FRAME } from "../store.js";
 import frames from "../data/frames.json";
 import frame from "./frame.vue";
 import { groupBy, nameSort } from "../util.js";
@@ -53,7 +53,7 @@ export default {
 	},
 	methods: {
 		chooseFrame(frame) {
-			this.$store.dispatch("SET_FRAME", frame);
+			this.$store.dispatch(SET_FRAME, frame);
 		},
 	},
 	components: {
