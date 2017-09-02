@@ -54,6 +54,7 @@ export default {
 	methods: {
 		chooseFrame(frame) {
 			this.$store.dispatch(SET_FRAME, frame);
+			this.$refs["frames-modal"].hide();
 		},
 	},
 	components: {
@@ -67,13 +68,13 @@ export default {
 		<b-button
 			v-if="!selectedFrame"
 			variant="secondary"
-			v-b-modal.options-modal
+			v-b-modal.frames-modal
 		>Select a frame</b-button>
 
 		<div
 			class="select-frame--frame"
 			v-if="selectedFrame"
-			v-b-modal.options-modal
+			v-b-modal.frames-modal
 		>
 			<frame
 				:frame="selectedFrame"
@@ -81,8 +82,8 @@ export default {
 		</div>
 
 		<b-modal
-			id="options-modal"
-			ref="options-modal"
+			id="frames-modal"
+			ref="frames-modal"
 			title="Select a frame"
 			class="select-frames--modal"
 		>

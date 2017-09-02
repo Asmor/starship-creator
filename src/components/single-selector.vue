@@ -65,6 +65,7 @@ export default {
 	methods: {
 		chooseItem(item) {
 			this.$store.dispatch(this.selectAction, item);
+			this.$refs[this.modalId].hide();
 		},
 		getValue({ item, col }) {
 			let value = item[col.key];
@@ -120,7 +121,7 @@ export default {
 		<b-modal
 			:id="modalId"
 			class="single-selector-modal"
-			ref="single-selector-modal"
+			:ref="modalId"
 			:title="modalTitle"
 		>
 			<table class="single-selector-modal--table">
