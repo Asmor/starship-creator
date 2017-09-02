@@ -63,7 +63,7 @@ export default {
 						{ name: "Cost",         key: "cost", center: true },
 					],
 					itemDisabled: function (currentShip, driftEngine) {
-						let pcu = currentShip.powerCore.pcu;
+						let pcu = currentShip.powerCore.pcu || 0;
 						let minPcu = driftEngine.minPcu;
 
 						console.log("Disabling", pcu, minPcu);
