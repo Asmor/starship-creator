@@ -11,6 +11,7 @@ let config = {
 	state: {
 		currentShip: {
 			armor: false,
+			driftEngine: false,
 			frame: false,
 			powerCore: false,
 			thrusters: false,
@@ -23,6 +24,8 @@ let config = {
 
 const SET_ARMOR = "SET_ARMOR";
 const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
+const SET_DRIFT_ENGINE = "SET_DRIFT_ENGINE";
+const SET_DRIFT_ENGINE_MUTATION = "SET_DRIFT_ENGINE_MUTATION";
 const SET_FRAME = "SET_FRAME";
 const SET_FRAME_MUTATION = "SET_FRAME_MUTATION";
 const SET_POWER_CORE = "SET_POWER_CORE";
@@ -33,10 +36,11 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 // Setup everything with simple default actions and mutations, override with more complex logic as
 // needed
 [
-	{ action: SET_ARMOR,      mutation: SET_ARMOR_MUTATION,      shipComponent: "armor" },
-	{ action: SET_FRAME,      mutation: SET_FRAME_MUTATION,      shipComponent: "frame" },
-	{ action: SET_POWER_CORE, mutation: SET_POWER_CORE_MUTATION, shipComponent: "powerCore" },
-	{ action: SET_THRUSTERS,  mutation: SET_THRUSTERS_MUTATION,  shipComponent: "thrusters" },
+	{ action: SET_ARMOR,        mutation: SET_ARMOR_MUTATION,        shipComponent: "armor" },
+	{ action: SET_DRIFT_ENGINE, mutation: SET_DRIFT_ENGINE_MUTATION, shipComponent: "driftEngine" },
+	{ action: SET_FRAME,        mutation: SET_FRAME_MUTATION,        shipComponent: "frame" },
+	{ action: SET_POWER_CORE,   mutation: SET_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
+	{ action: SET_THRUSTERS,    mutation: SET_THRUSTERS_MUTATION,    shipComponent: "thrusters" },
 ].forEach(function (args) {
 	config.actions[args.action] = ({ commit }, item) => {
 		commit(args.mutation, item);
@@ -68,6 +72,7 @@ const store = new Vuex.Store(config);
 export {
 	store,
 	SET_ARMOR,
+	SET_DRIFT_ENGINE,
 	SET_FRAME,
 	SET_POWER_CORE,
 	SET_THRUSTERS,
