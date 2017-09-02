@@ -25,7 +25,7 @@ export default {
 					{ name: "Cost", key: "cost", multiplyBySize: true, addendum: "based on size", center: true },
 				],
 				items: armors,
-				modalTitle: "Select Armor",
+				selectTitle: "Select armor",
 				selectAction: SET_ARMOR,
 				shipComponentKey: "armor",
 				title: "Armor",
@@ -41,7 +41,7 @@ export default {
 					return powerCore.sizes[size];
 				},
 				items: powerCores,
-				modalTitle: "Select a Power Core",
+				selectTitle: "Select a power core",
 				selectAction: SET_POWER_CORE,
 				shipComponentKey: "powerCore",
 				title: "Power Core",
@@ -59,7 +59,7 @@ export default {
 					return thruster.size === size;
 				},
 				items: thrusters,
-				modalTitle: "Select Thrusters",
+				selectTitle: "Select thrusters",
 				selectAction: SET_THRUSTERS,
 				shipComponentKey: "thrusters",
 				title: "Thrusters",
@@ -88,8 +88,8 @@ export default {
 				:columns="powerCoreSelectorArgs.columns"
 				:item-filter="powerCoreSelectorArgs.itemFilter"
 				:items="powerCoreSelectorArgs.items"
-				:modal-title="powerCoreSelectorArgs.modalTitle"
 				:select-action="powerCoreSelectorArgs.selectAction"
+				:select-title="powerCoreSelectorArgs.selectTitle"
 				:ship-component-key="powerCoreSelectorArgs.shipComponentKey"
 				:title="powerCoreSelectorArgs.title"
 			></single-selector>
@@ -100,8 +100,8 @@ export default {
 				:columns="thrusterSelectorArgs.columns"
 				:item-filter="thrusterSelectorArgs.itemFilter"
 				:items="thrusterSelectorArgs.items"
-				:modal-title="thrusterSelectorArgs.modalTitle"
 				:select-action="thrusterSelectorArgs.selectAction"
+				:select-title="thrusterSelectorArgs.selectTitle"
 				:ship-component-key="thrusterSelectorArgs.shipComponentKey"
 				:title="thrusterSelectorArgs.title"
 			></single-selector>
@@ -112,8 +112,8 @@ export default {
 				:columns="armorSelectorArgs.columns"
 				:item-filter="armorSelectorArgs.itemFilter"
 				:items="armorSelectorArgs.items"
-				:modal-title="armorSelectorArgs.modalTitle"
 				:select-action="armorSelectorArgs.selectAction"
+				:select-title="armorSelectorArgs.selectTitle"
 				:ship-component-key="armorSelectorArgs.shipComponentKey"
 				:title="armorSelectorArgs.title"
 			></single-selector>

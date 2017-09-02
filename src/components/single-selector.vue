@@ -91,8 +91,8 @@ export default {
 		"columns",
 		"itemFilter",
 		"items",
-		"modalTitle",
 		"selectAction",
+		"selectTitle",
 		"shipComponentKey",
 		"title",
 	],
@@ -108,7 +108,7 @@ export default {
 			v-if="$store.state.currentShip.frame && !selectedItem"
 			variant="primary"
 			v-b-modal="modalId"
-		>{{ modalTitle }}</b-button>
+		>{{ selectTitle }}</b-button>
 
 		<single-item
 			v-if="selectedItem"
@@ -122,7 +122,7 @@ export default {
 			:id="modalId"
 			class="single-selector-modal"
 			:ref="modalId"
-			:title="modalTitle"
+			:title="selectTitle"
 		>
 			<table class="single-selector-modal--table">
 				<thead>
