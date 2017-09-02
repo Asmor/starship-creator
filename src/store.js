@@ -9,13 +9,7 @@ Vue.use(Vuex);
 let config = {
 	strict: true,
 	state: {
-		currentShip: {
-			armor: false,
-			driftEngine: false,
-			frame: false,
-			powerCore: false,
-			thrusters: false,
-		},
+		currentShip: {},
 	},
 	actions: {},
 	mutations: {},
@@ -42,6 +36,9 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 	{ action: SET_POWER_CORE,   mutation: SET_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
 	{ action: SET_THRUSTERS,    mutation: SET_THRUSTERS_MUTATION,    shipComponent: "thrusters" },
 ].forEach(function (args) {
+	// All components are initialized to false because it seems like VueX handles null specially
+	config.state.currentShip[args.shipComponent] = false;
+
 	config.actions[args.action] = ({ commit }, item) => {
 		commit(args.mutation, item);
 	};
