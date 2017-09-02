@@ -1,0 +1,17 @@
+[
+	{"name": "Mk 1 armor",   "acBonus": "+1",   "tlMod":  0,  "turnDistance":  "0",  "cost": 1 },
+	{"name": "Mk 2 armor",   "acBonus": "+2",   "tlMod":  0,  "turnDistance":  "0",  "cost": 2 },
+	{"name": "Mk 3 armor",   "acBonus": "+3",   "tlMod":  0,  "turnDistance":  "0",  "cost": 3 },
+	{"name": "Mk 4 armor",   "acBonus": "+4",   "tlMod":  0,  "turnDistance":  "0",  "cost": 5 },
+	{"name": "Mk 5 armor",   "acBonus": "+5",   "tlMod":  -1, "turnDistance":  "0",  "cost": 7 },
+	{"name": "Mk 6 armor",   "acBonus": "+6",   "tlMod":  -1, "turnDistance":  "0",  "cost": 9 },
+	{"name": "Mk 7 armor",   "acBonus": "+7",   "tlMod":  -1, "turnDistance":  "0",  "cost": 12 },
+	{"name": "Mk 8 armor",   "acBonus": "+8",   "tlMod":  -1, "turnDistance":  "0",  "cost": 15 },
+	{"name": "Mk 9 armor",   "acBonus": "+9",   "tlMod":  -2, "turnDistance":  "+1", "cost": 18 },
+	{"name": "Mk 10 armor",  "acBonus": "+10",  "tlMod":  -2, "turnDistance":  "+1", "cost": 21 },
+	{"name": "Mk 11 armor",  "acBonus": "+11",  "tlMod":  -2, "turnDistance":  "+1", "cost": 25 },
+	{"name": "Mk 12 armor",  "acBonus": "+12",  "tlMod":  -3, "turnDistance":  "+2", "cost": 30 },
+	{"name": "Mk 13 armor",  "acBonus": "+13",  "tlMod":  -3, "turnDistance":  "+2", "cost": 35 },
+	{"name": "Mk 14 armor",  "acBonus": "+14",  "tlMod":  -3, "turnDistance":  "+2", "cost": 40 },
+	{"name": "Mk 15 armor",  "acBonus": "+15",  "tlMod":  -4, "turnDistance":  "+3", "cost": 45 }
+]

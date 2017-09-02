@@ -1,5 +1,7 @@
 <script>
 import { store } from "../store.js";
+import { sizeToInt } from "../util.js";
+
 import singleItem from "./single-item.vue";
 
 let modalCounter = 0;
@@ -8,7 +10,16 @@ export default {
 	name: "singleSelector",
 	store,
 	data () {
+		let addendaAsterisks = "*";
 		return {
+			addenda: this.columns.reduce(function (acc, col) {
+				if ( col.addendum ) {
+					acc[col.key] = { note: addendaAsterisks, text: col.addendum };
+					addendaAsterisks += "*";
+				}
+
+				return acc;
+			}, {}),
 			modalId: "single-selector-modal" + modalCounter++,
 		};
 	},
@@ -25,11 +36,21 @@ export default {
 			let item = this.selectedItem;
 
 			this.columns.forEach(col => {
-				let part = col.name + " " + item[col.key];
+				let value = this.getValue({ item, col });
+
+				if ( col.hideIfZero && this.isZero(item[col.key]) ) {
+					return;
+				}
+
+				let part = col.name + " " + value;
 
 				// We don't label the name
 				if ( col.key === "name" ) {
-					part = item[col.key];
+					part = value;
+				}
+
+				if ( col.addendum ) {
+					part += " (" + col.addendum + ")";
 				}
 
 				parts.push(part);
@@ -43,8 +64,26 @@ export default {
 	},
 	methods: {
 		chooseItem(item) {
-			console.log("chooseItem", this.selectAction, item);
 			this.$store.dispatch(this.selectAction, item);
+		},
+		getValue({ item, col }) {
+			let value = item[col.key];
+
+			if ( col.multiplyBySize ) {
+				let size = this.$store.state.currentShip.frame.size;
+				let multiplier = sizeToInt[size];
+
+				value *= multiplier;
+			}
+
+			return value;
+		},
+		isZero(thing) {
+			return (
+				thing === "0"
+				|| thing === "+0"
+				|| thing === 0
+			);
 		},
 	},
 	props: [
@@ -64,12 +103,18 @@ export default {
 
 <template>
 	<div class="single-selector">
+		<b-button
+			v-if="$store.state.currentShip.frame && !selectedItem"
+			variant="secondary"
+			v-b-modal="modalId"
+		>Select armor</b-button>
+
 		<single-item
 			v-if="selectedItem"
 			:title="title"
 			v-b-modal="modalId"
 		>
-			{{ selectedItem.name }}; PCU {{ selectedItem.pcu }}; Cost {{ selectedItem.cost }}
+			{{ selectedText }}
 		</single-item>
 
 		<b-modal
@@ -81,8 +126,8 @@ export default {
 			<table class="single-selector-modal--table">
 				<thead>
 					<tr class="single-selector-modal--header">
-						<td v-for="column in columns">
-							{{ column.name }}
+						<td v-for="col in columns">
+							{{ col.name }}
 						</td>
 					</tr>
 				</thead>
@@ -93,13 +138,22 @@ export default {
 						:class="{ 'single-selector-modal--body__selected': selectedItem.name === item.name }"
 						@click="chooseItem(item)"
 					>
-						<td v-for="column in columns">
-							{{ item[column.key] }}
+						<td v-for="col in columns">
+							<span v-if="!col.hideIfZero || !isZero(item[col.key])">
+								{{ getValue({ item, col }) }}{{ addenda[col.key] && addenda[col.key].note }}
+							</span>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			</b-tabs>
+			<div class="single-selector-modal--addenda">
+				<div
+					v-for="(addendum, key) in addenda"
+					class="single-selector-modal--addendum"
+				>
+					{{ addendum.note }}{{ addendum.text }}
+				</div>
+			</div>
 			<div slot="modal-footer"></div>
 		</b-modal>
 	</div>

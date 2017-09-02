@@ -6,6 +6,8 @@ import thrusters from "./data/thrusters.json";
 
 Vue.use(Vuex);
 
+const SET_ARMOR = "SET_ARMOR";
+const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
 const SET_FRAME = "SET_FRAME";
 const SET_FRAME_MUTATION = "SET_FRAME_MUTATION";
 const SET_POWER_CORE = "SET_POWER_CORE";
@@ -17,12 +19,16 @@ const store = new Vuex.Store({
 	strict: true,
 	state: {
 		currentShip: {
+			armor: false,
 			frame: false,
 			powerCore: false,
 			thrusters: false,
 		},
 	},
 	actions: {
+		SET_ARMOR: ({ commit }, frame) => {
+			commit(SET_ARMOR_MUTATION, frame);
+		},
 		SET_FRAME: ({ commit }, frame) => {
 			commit(SET_FRAME_MUTATION, frame);
 		},
@@ -30,11 +36,13 @@ const store = new Vuex.Store({
 			commit(SET_POWER_CORE_MUTATION, powerCore);
 		},
 		SET_THRUSTERS: ({ commit }, thruster) => {
-			console.log("SET_THRUSTERS");
 			commit(SET_THRUSTERS_MUTATION, thruster);
 		},
 	},
 	mutations: {
+		SET_ARMOR_MUTATION: (state, armor) => {
+			state.currentShip.armor = armor;
+		},
 		SET_FRAME_MUTATION: (state, frame) => {
 			state.currentShip.frame = frame;
 
@@ -64,6 +72,7 @@ const store = new Vuex.Store({
 
 export {
 	store,
+	SET_ARMOR,
 	SET_FRAME,
 	SET_POWER_CORE,
 	SET_THRUSTERS,

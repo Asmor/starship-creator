@@ -28,8 +28,19 @@ function groupBy({ collection, groupKey, sortKey }) {
 
 const nameSort = sortBy("name");
 
+const sizeToInt = {
+	Tiny: 1,
+	Small: 2,
+	Medium: 3,
+	Large: 4,
+	Huge: 5,
+	Gargantuan: 6,
+	Colossal: 7,
+};
+
 export {
 	groupBy,
 	nameSort,
+	sizeToInt,
 	sortBy,
 }

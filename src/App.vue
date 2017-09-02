@@ -32,15 +32,29 @@
 			></single-selector>
 		</div>
 
+		<div class="app--section">
+			<single-selector
+				:columns="armorSelectorArgs.columns"
+				:item-filter="armorSelectorArgs.itemFilter"
+				:items="armorSelectorArgs.items"
+				:modal-fitle="armorSelectorArgs.modalTitle"
+				:select-action="armorSelectorArgs.selectAction"
+				:ship-component-key="armorSelectorArgs.shipComponentKey"
+				:title="armorSelectorArgs.title"
+			></single-selector>
+		</div>
+
 	</div>
 </template>
 
 <script>
 import {
+	SET_ARMOR,
 	SET_POWER_CORE,
 	SET_THRUSTERS,
 } from "./store.js";
 
+import armors from "./data/armors.json";
 import powerCores from "./data/power-cores.json";
 import thrusters from "./data/thrusters.json";
 
@@ -51,6 +65,20 @@ export default {
 	name: 'app',
 	data () {
 		return {
+			armorSelectorArgs: {
+				columns: [
+					{ name: "Armor", key: "name" },
+					{ name: "AC Bonus", key: "acBonus" },
+					{ name: "TL Mod", key: "tlMod", hideIfZero: true },
+					{ name: "Turn Distance", key: "turnDistance", hideIfZero: true },
+					{ name: "Cost", key: "cost", multiplyBySize: true, addendum: "based on size" },
+				],
+				items: armors,
+				modalTitle: "Select Armor",
+				selectAction: SET_ARMOR,
+				shipComponentKey: "armor",
+				title: "Armor",
+			},
 			powerCoreSelectorArgs: {
 				columns: [
 					{ name: "Power core", key: "name" },
