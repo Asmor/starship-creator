@@ -1,4 +1,5 @@
 [
+	{"name": "No armor",     "acBonus": "+0",   "tlMod":  0,  "turnDistance":  "0",  "cost": 0 },
 	{"name": "Mk 1 armor",   "acBonus": "+1",   "tlMod":  0,  "turnDistance":  "0",  "cost": 1 },
 	{"name": "Mk 2 armor",   "acBonus": "+2",   "tlMod":  0,  "turnDistance":  "0",  "cost": 2 },
 	{"name": "Mk 3 armor",   "acBonus": "+3",   "tlMod":  0,  "turnDistance":  "0",  "cost": 3 },
