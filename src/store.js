@@ -55,12 +55,12 @@ config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 	// need to check that the components are valid. If they're not, switch to the first one that is.
 	var powerCoreValid = state.currentShip.powerCore && state.currentShip.powerCore.sizes[frame.size];
 	if ( !powerCoreValid ) {
-		state.currentShip.powerCore = powerCores.find(core => core.sizes[frame.size]);
+		state.currentShip.powerCore = false;
 	}
 
 	var thrustersValid = state.currentShip.thrusters && (state.currentShip.thrusters.size === frame.size);
 	if ( !thrustersValid ) {
-		state.currentShip.thrusters = thrusters.find(thruster => thruster.size === frame.size);
+		state.currentShip.thrusters = false;
 	}
 };
 
