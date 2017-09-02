@@ -9,7 +9,7 @@ export default {
 	store,
 	data () {
 		return {
-			modalId: "single-selector-modal" + modalCounter,
+			modalId: "single-selector-modal" + modalCounter++,
 		};
 	},
 	computed: {
@@ -43,6 +43,7 @@ export default {
 	},
 	methods: {
 		chooseItem(item) {
+			console.log("chooseItem", this.selectAction, item);
 			this.$store.dispatch(this.selectAction, item);
 		},
 	},

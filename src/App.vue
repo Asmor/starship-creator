@@ -20,12 +20,29 @@
 			></single-selector>
 		</div>
 
+		<div class="app--section">
+			<single-selector
+				:columns="thrusterSelectorArgs.columns"
+				:item-filter="thrusterSelectorArgs.itemFilter"
+				:items="thrusterSelectorArgs.items"
+				:modal-fitle="thrusterSelectorArgs.modalTitle"
+				:select-action="thrusterSelectorArgs.selectAction"
+				:ship-component-key="thrusterSelectorArgs.shipComponentKey"
+				:title="thrusterSelectorArgs.title"
+			></single-selector>
+		</div>
+
 	</div>
 </template>
 
 <script>
-import { SET_POWER_CORE } from "./store.js";
+import {
+	SET_POWER_CORE,
+	SET_THRUSTERS,
+} from "./store.js";
+
 import powerCores from "./data/power-cores.json";
+import thrusters from "./data/thrusters.json";
 
 import selectFrame from "./components/select-frame.vue";
 import singleSelector from "./components/single-selector.vue";
@@ -49,6 +66,24 @@ export default {
 				selectAction: SET_POWER_CORE,
 				shipComponentKey: "powerCore",
 				title: "Power Core",
+			},
+			thrusterSelectorArgs: {
+				columns: [
+					{ name: "Thrusters",    key: "name" },
+					{ name: "Speed",        key: "speed" },
+					{ name: "Piloting Mod", key: "pilotingMod" },
+					{ name: "PCU Cost",     key: "pcuCost" },
+					{ name: "Cost",         key: "cost" },
+				],
+				itemFilter: function (currentShip, thruster) {
+					let size = currentShip.frame.size;
+					return thruster.size === size;
+				},
+				items: thrusters,
+				modalTitle: "Select Thrusters",
+				selectAction: SET_THRUSTERS,
+				shipComponentKey: "thrusters",
+				title: "Thrusters",
 			},
 		}
 	},
