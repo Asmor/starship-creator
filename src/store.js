@@ -50,15 +50,13 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 	state.currentShip.frame = frame;
 
-	// Check if the power core is valid for the new frame size and, if not, switch to the
-	// first power core that is
+	// Many components are only valid for particular ship sizes, so when we change frame size we
+	// need to check that the components are valid. If they're not, switch to the first one that is.
 	var powerCoreValid = state.currentShip.powerCore && state.currentShip.powerCore.sizes[frame.size];
 	if ( !powerCoreValid ) {
 		state.currentShip.powerCore = powerCores.find(core => core.sizes[frame.size]);
 	}
 
-	// Check if the power core is valid for the new frame size and, if not, switch to the
-	// first power core that is
 	var thrustersValid = state.currentShip.thrusters && (state.currentShip.thrusters.size === frame.size);
 	if ( !thrustersValid ) {
 		state.currentShip.thrusters = thrusters.find(thruster => thruster.size === frame.size);
