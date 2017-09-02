@@ -1,52 +1,3 @@
-<template>
-	<div id="app" class="app">
-		<b-navbar toggleable="md" type="dark" variant="dark" :sticky="true">
-			<b-navbar-brand href="#">TODO TITLE GOES HERE</b-navbar-brand>
-		</b-navbar>
-
-		<div class="app--section">
-			<select-frame></select-frame>
-		</div>
-
-		<div class="app--section">
-			<single-selector
-				:columns="powerCoreSelectorArgs.columns"
-				:item-filter="powerCoreSelectorArgs.itemFilter"
-				:items="powerCoreSelectorArgs.items"
-				:modal-fitle="powerCoreSelectorArgs.modalTitle"
-				:select-action="powerCoreSelectorArgs.selectAction"
-				:ship-component-key="powerCoreSelectorArgs.shipComponentKey"
-				:title="powerCoreSelectorArgs.title"
-			></single-selector>
-		</div>
-
-		<div class="app--section">
-			<single-selector
-				:columns="thrusterSelectorArgs.columns"
-				:item-filter="thrusterSelectorArgs.itemFilter"
-				:items="thrusterSelectorArgs.items"
-				:modal-fitle="thrusterSelectorArgs.modalTitle"
-				:select-action="thrusterSelectorArgs.selectAction"
-				:ship-component-key="thrusterSelectorArgs.shipComponentKey"
-				:title="thrusterSelectorArgs.title"
-			></single-selector>
-		</div>
-
-		<div class="app--section">
-			<single-selector
-				:columns="armorSelectorArgs.columns"
-				:item-filter="armorSelectorArgs.itemFilter"
-				:items="armorSelectorArgs.items"
-				:modal-fitle="armorSelectorArgs.modalTitle"
-				:select-action="armorSelectorArgs.selectAction"
-				:ship-component-key="armorSelectorArgs.shipComponentKey"
-				:title="armorSelectorArgs.title"
-			></single-selector>
-		</div>
-
-	</div>
-</template>
-
 <script>
 import {
 	SET_ARMOR,
@@ -121,6 +72,55 @@ export default {
 	}
 }
 </script>
+
+<template>
+	<div id="app" class="app">
+		<b-navbar toggleable="md" type="dark" variant="dark" :sticky="true">
+			<b-navbar-brand href="#">TODO TITLE GOES HERE</b-navbar-brand>
+		</b-navbar>
+
+		<div class="app--section">
+			<select-frame></select-frame>
+		</div>
+
+		<div class="app--section">
+			<single-selector
+				:columns="powerCoreSelectorArgs.columns"
+				:item-filter="powerCoreSelectorArgs.itemFilter"
+				:items="powerCoreSelectorArgs.items"
+				:modal-fitle="powerCoreSelectorArgs.modalTitle"
+				:select-action="powerCoreSelectorArgs.selectAction"
+				:ship-component-key="powerCoreSelectorArgs.shipComponentKey"
+				:title="powerCoreSelectorArgs.title"
+			></single-selector>
+		</div>
+
+		<div class="app--section">
+			<single-selector
+				:columns="thrusterSelectorArgs.columns"
+				:item-filter="thrusterSelectorArgs.itemFilter"
+				:items="thrusterSelectorArgs.items"
+				:modal-fitle="thrusterSelectorArgs.modalTitle"
+				:select-action="thrusterSelectorArgs.selectAction"
+				:ship-component-key="thrusterSelectorArgs.shipComponentKey"
+				:title="thrusterSelectorArgs.title"
+			></single-selector>
+		</div>
+
+		<div class="app--section">
+			<single-selector
+				:columns="armorSelectorArgs.columns"
+				:item-filter="armorSelectorArgs.itemFilter"
+				:items="armorSelectorArgs.items"
+				:modal-fitle="armorSelectorArgs.modalTitle"
+				:select-action="armorSelectorArgs.selectAction"
+				:ship-component-key="armorSelectorArgs.shipComponentKey"
+				:title="armorSelectorArgs.title"
+			></single-selector>
+		</div>
+
+	</div>
+</template>
 
 <style lang="scss">
 .app {
