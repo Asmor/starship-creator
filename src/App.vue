@@ -19,10 +19,10 @@ export default {
 			armorSelectorArgs: {
 				columns: [
 					{ name: "Armor", key: "name" },
-					{ name: "AC Bonus", key: "acBonus" },
-					{ name: "TL Mod", key: "tlMod", hideIfZero: true },
-					{ name: "Turn Distance", key: "turnDistance", hideIfZero: true },
-					{ name: "Cost", key: "cost", multiplyBySize: true, addendum: "based on size" },
+					{ name: "AC Bonus", key: "acBonus", center: true },
+					{ name: "TL Mod", key: "tlMod", hideIfZero: true, center: true },
+					{ name: "Turn Distance", key: "turnDistance", hideIfZero: true, center: true },
+					{ name: "Cost", key: "cost", multiplyBySize: true, addendum: "based on size", center: true },
 				],
 				items: armors,
 				modalTitle: "Select Armor",
@@ -33,8 +33,8 @@ export default {
 			powerCoreSelectorArgs: {
 				columns: [
 					{ name: "Power core", key: "name" },
-					{ name: "PCU",        key: "pcu" },
-					{ name: "Cost",       key: "cost" },
+					{ name: "PCU",        key: "pcu", center: true },
+					{ name: "Cost",       key: "cost", center: true },
 				],
 				itemFilter: function (currentShip, powerCore) {
 					let size = currentShip.frame.size;
@@ -49,10 +49,10 @@ export default {
 			thrusterSelectorArgs: {
 				columns: [
 					{ name: "Thrusters",    key: "name" },
-					{ name: "Speed",        key: "speed" },
-					{ name: "Piloting Mod", key: "pilotingMod" },
-					{ name: "PCU Cost",     key: "pcuCost" },
-					{ name: "Cost",         key: "cost" },
+					{ name: "Speed",        key: "speed", center: true },
+					{ name: "Piloting Mod", key: "pilotingMod", center: true },
+					{ name: "PCU Cost",     key: "pcuCost", center: true },
+					{ name: "Cost",         key: "cost", center: true },
 				],
 				itemFilter: function (currentShip, thruster) {
 					let size = currentShip.frame.size;

@@ -126,7 +126,10 @@ export default {
 			<table class="single-selector-modal--table">
 				<thead>
 					<tr class="single-selector-modal--header">
-						<td v-for="col in columns">
+						<td
+							v-for="col in columns"
+							:class="{ 'single-selector-modal--column__centered': col.center }"
+						>
 							{{ col.name }}
 						</td>
 					</tr>
@@ -138,7 +141,10 @@ export default {
 						:class="{ 'single-selector-modal--body__selected': selectedItem.name === item.name }"
 						@click="chooseItem(item)"
 					>
-						<td v-for="col in columns">
+						<td
+							v-for="col in columns"
+							:class="{ 'single-selector-modal--column__centered': col.center }"
+						>
 							<span v-if="!col.hideIfZero || !isZero(item[col.key])">
 								{{ getValue({ item, col }) }}{{ addenda[col.key] && addenda[col.key].note }}
 							</span>
@@ -203,6 +209,10 @@ export default {
 		&.single-selector-modal--body__selected {
 			background-color: #dfd;
 		}
+	}
+
+	.single-selector-modal--column__centered {
+		text-align: center;
 	}
 }
 </style>
