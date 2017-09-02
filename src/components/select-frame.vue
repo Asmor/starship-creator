@@ -67,7 +67,7 @@ export default {
 	<div class="select-frame">
 		<b-button
 			v-if="!selectedFrame"
-			variant="secondary"
+			variant="primary"
 			v-b-modal.frames-modal
 		>Select a frame</b-button>
 

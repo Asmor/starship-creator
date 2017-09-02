@@ -106,9 +106,9 @@ export default {
 	<div class="single-selector">
 		<b-button
 			v-if="$store.state.currentShip.frame && !selectedItem"
-			variant="secondary"
+			variant="primary"
 			v-b-modal="modalId"
-		>Select armor</b-button>
+		>{{ modalTitle }}</b-button>
 
 		<single-item
 			v-if="selectedItem"

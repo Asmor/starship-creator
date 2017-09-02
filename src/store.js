@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import { sizeToInt } from "./util.js";
+
 import powerCores from "./data/power-cores.json";
 import thrusters from "./data/thrusters.json";
 
