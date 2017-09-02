@@ -1,8 +1,8 @@
 [
-	{ "name": "No drift engine", "rating": 0, "minPCU": 0,   "maxSize": "Colossal", "cost": 0 },
-	{ "name": "Signal Basic",    "rating": 1, "minPCU": 75,  "maxSize": "Colossal", "cost": 2 },
-	{ "name": "Signal Booster",  "rating": 2, "minPCU": 100, "maxSize": "Huge",     "cost": 5 },
-	{ "name": "Signal Major",    "rating": 3, "minPCU": 150, "maxSize": "Large",    "cost": 10 },
-	{ "name": "Signal Superior", "rating": 4, "minPCU": 175, "maxSize": "Large",    "cost": 15 },
-	{ "name": "Signal Ultra",    "rating": 5, "minPCU": 200, "maxSize": "Medium",   "cost": 20 }
+	{ "name": "No drift engine", "rating": 0, "minPcu": 0,   "maxSize": "Colossal", "cost": 0 },
+	{ "name": "Signal Basic",    "rating": 1, "minPcu": 75,  "maxSize": "Colossal", "cost": 2 },
+	{ "name": "Signal Booster",  "rating": 2, "minPcu": 100, "maxSize": "Huge",     "cost": 5 },
+	{ "name": "Signal Major",    "rating": 3, "minPcu": 150, "maxSize": "Large",    "cost": 10 },
+	{ "name": "Signal Superior", "rating": 4, "minPcu": 175, "maxSize": "Large",    "cost": 15 },
+	{ "name": "Signal Ultra",    "rating": 5, "minPcu": 200, "maxSize": "Medium",   "cost": 20 }
 ]

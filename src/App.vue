@@ -1,11 +1,15 @@
 <script>
 import {
 	SET_ARMOR,
+	SET_DRIFT_ENGINE,
 	SET_POWER_CORE,
 	SET_THRUSTERS,
 } from "./store.js";
 
+import { sizeToInt } from "./util.js";
+
 import armors from "./data/armors.json";
+import driftEngines from "./data/drift-engines.json";
 import powerCores from "./data/power-cores.json";
 import thrusters from "./data/thrusters.json";
 
@@ -29,6 +33,30 @@ export default {
 				selectAction: SET_ARMOR,
 				shipComponentKey: "armor",
 				title: "Armor",
+			},
+			driftEngineSelectorArgs: {
+				columns: [
+					{ name: "Drift engine", key: "name" },
+					{ name: "Rating",       key: "rating", hideIfZero: true, center: true },
+					{ name: "Minimum PCU",  key: "minPcu", hideIfZero: true, center: true },
+					{ name: "Cost",         key: "cost", center: true },
+				],
+				itemDisabled: function (currentShip, driftEngine) {
+					let pcu = currentShip.powerCore.pcu;
+					let minPcu = driftEngine.minPcu;
+
+					return pcu >= minPcu;
+				},
+				itemFilter: function (currentShip, driftEngine) {
+					let maxSize = sizeToInt[driftEngine.maxSize];
+					let size = sizeToInt[currentShip.frame.size];
+					return size <= maxSize;
+				},
+				items: driftEngines,
+				selectTitle: "Select a drift engine",
+				selectAction: SET_DRIFT_ENGINE,
+				shipComponentKey: "driftEngine",
+				title: "Drift Engine",
 			},
 			powerCoreSelectorArgs: {
 				columns: [
@@ -104,6 +132,19 @@ export default {
 				:select-title="thrusterSelectorArgs.selectTitle"
 				:ship-component-key="thrusterSelectorArgs.shipComponentKey"
 				:title="thrusterSelectorArgs.title"
+			></single-selector>
+		</div>
+
+		<div class="app--section">
+			<single-selector
+				:columns="driftEngineSelectorArgs.columns"
+				:item-disabled="driftEngineSelectorArgs.itemDisabled"
+				:item-filter="driftEngineSelectorArgs.itemFilter"
+				:items="driftEngineSelectorArgs.items"
+				:select-action="driftEngineSelectorArgs.selectAction"
+				:select-title="driftEngineSelectorArgs.selectTitle"
+				:ship-component-key="driftEngineSelectorArgs.shipComponentKey"
+				:title="driftEngineSelectorArgs.title"
 			></single-selector>
 		</div>
 

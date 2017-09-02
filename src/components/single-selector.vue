@@ -64,8 +64,10 @@ export default {
 	},
 	methods: {
 		chooseItem(item) {
-			this.$store.dispatch(this.selectAction, item);
-			this.$refs[this.modalId].hide();
+			if ( this.itemAllowed(item) ) {
+				this.$store.dispatch(this.selectAction, item);
+				this.$refs[this.modalId].hide();
+			}
 		},
 		getValue({ item, col }) {
 			let value = item[col.key];
@@ -86,9 +88,17 @@ export default {
 				|| thing === 0
 			);
 		},
+		itemAllowed(item) {
+			if ( !this.itemDisabled ) {
+				return true;
+			}
+
+			return this.itemDisabled(this.$store.state.currentShip, item);
+		},
 	},
 	props: [
 		"columns",
+		"itemDisabled",
 		"itemFilter",
 		"items",
 		"selectAction",
@@ -139,7 +149,10 @@ export default {
 					<tr
 						v-for="item in availableItems"
 						class="single-selector-modal--body"
-						:class="{ 'single-selector-modal--body__selected': selectedItem.name === item.name }"
+						:class="{
+							'single-selector-modal--body__selected': selectedItem.name === item.name,
+							'single-selector-modal--body__disabled': !itemAllowed(item),
+						}"
 						@click="chooseItem(item)"
 					>
 						<td
@@ -209,6 +222,12 @@ export default {
 
 		&.single-selector-modal--body__selected {
 			background-color: #dfd;
+		}
+
+		&.single-selector-modal--body__disabled {
+			background-color: inherit;
+			cursor: not-allowed;
+			color: #ccc;
 		}
 	}
 

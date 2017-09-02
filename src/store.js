@@ -51,18 +51,43 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 });
 
 config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
-	state.currentShip.frame = frame;
+	let ship = state.currentShip;
+	ship.frame = frame;
 
 	// Many components are only valid for particular ship sizes, so when we change frame size we
 	// need to check that the components are valid. If they're not, switch to the first one that is.
-	var powerCoreValid = state.currentShip.powerCore && state.currentShip.powerCore.sizes[frame.size];
+	var powerCoreValid = ship.powerCore && ship.powerCore.sizes[frame.size];
 	if ( !powerCoreValid ) {
-		state.currentShip.powerCore = false;
+		ship.powerCore = false;
 	}
 
-	var thrustersValid = state.currentShip.thrusters && (state.currentShip.thrusters.size === frame.size);
+	var thrustersValid = ship.thrusters && (ship.thrusters.size === frame.size);
 	if ( !thrustersValid ) {
-		state.currentShip.thrusters = false;
+		ship.thrusters = false;
+	}
+
+	if ( ship.driftEngine ) {
+		let maxSize = sizeToInt[state.currentShip.driftEngine.maxSize];
+		let size = sizeToInt[frame.size];
+
+		if ( size > maxSize ) {
+			ship.driftEngine = false;
+		}
+	}
+};
+
+config.mutations[SET_POWER_CORE_MUTATION] = (state, powerCore) => {
+	let ship = state.currentShip;
+	ship.powerCore = powerCore;
+
+	// Drift engines have a minimum PCU requirement
+	if ( ship.driftEngine ) {
+		let minPcu = ship.driftEngine.minPcu;
+		let pcu = powerCore.pcu;
+
+		if ( pcu < minPcu ) {
+			ship.driftEngine = false;
+		}
 	}
 };
 
