@@ -5,6 +5,7 @@ import {
 	SET_DEFENSES,
 	SET_DRIFT_ENGINE,
 	SET_POWER_CORE,
+	SET_SHIELDS,
 	SET_THRUSTERS,
 } from "./store.js";
 
@@ -15,6 +16,7 @@ import computers from "./data/computers.json";
 import defenses from "./data/defensive-countermeasures.json";
 import driftEngines from "./data/drift-engines.json";
 import powerCores from "./data/power-cores.json";
+import shields from "./data/shields.json";
 import thrusters from "./data/thrusters.json";
 
 import selectFrame from "./components/select-frame.vue";
@@ -104,6 +106,20 @@ let powerCoreSection = {
 	shipComponentKey: "powerCore",
 	title: "Power Core",
 };
+let shieldsSection = {
+	columns: [
+		{ name: "Shield", key: "name" },
+		{ name: "Total SP", key: "totalSp", hideIfZero: true, center: true },
+		{ name: "Regend (SP/min)", key: "regen", hideIfZero: true, center: true },
+		{ name: "Cost", key: "cost", center: true },
+	],
+	items: shields,
+	removeable: true,
+	selectTitle: "Select shields",
+	selectAction: SET_SHIELDS,
+	shipComponentKey: "shields",
+	title: "Shields",
+};
 let thrustersSection = {
 	columns: [
 		{ name: "Thrusters",    key: "name" },
@@ -134,6 +150,7 @@ export default {
 				driftEngineSection,
 				armorSection,
 				defensesSection,
+				shieldsSection,
 			],
 		}
 	},
