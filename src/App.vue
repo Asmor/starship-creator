@@ -154,29 +154,41 @@ export default {
 			<select-frame></select-frame>
 		</div>
 
-		<div
-			v-for="section in simpleSections"
-			class="app--section"
-		>
-			<single-selector
-				:columns="section.columns"
-				:item-disabled="section.itemDisabled"
-				:item-filter="section.itemFilter"
-				:items="section.items"
-				:removeable="section.removeable"
-				:select-action="section.selectAction"
-				:select-title="section.selectTitle"
-				:ship-component-key="section.shipComponentKey"
-				:title="section.title"
-			></single-selector>
+		<div class="app--columns">
+			<div
+				v-for="section in simpleSections"
+				class="app--section app--section__in-columns"
+			>
+				<single-selector
+					:columns="section.columns"
+					:item-disabled="section.itemDisabled"
+					:item-filter="section.itemFilter"
+					:items="section.items"
+					:removeable="section.removeable"
+					:select-action="section.selectAction"
+					:select-title="section.selectTitle"
+					:ship-component-key="section.shipComponentKey"
+					:title="section.title"
+				></single-selector>
+			</div>
 		</div>
 	</div>
 </template>
 
 <style lang="scss">
 .app {
+	.app--columns {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
 	.app--section {
 		padding: 10px;
+		flex: 1 1 300px;
+
+		&.app--section__in-columns {
+			text-align: center;
+		}
 	}
 }
 </style>

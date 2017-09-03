@@ -185,6 +185,8 @@ export default {
 
 <style lang="scss">
 .single-selector {
+	text-align: left;
+
 	.single-selector--frame-option {
 		cursor: pointer;
 		padding: 10px;
