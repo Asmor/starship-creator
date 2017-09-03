@@ -89,7 +89,8 @@ export default {
 		>
 			<b-tabs pills>
 				<b-tab
-					v-for="(framesOfSize, sizeName) in framesBySize"
+					v-for="(framesOfSize, sizeName, index) in framesBySize"
+					:key="index"
 					:title="sizeName"
 				>
 					<div
