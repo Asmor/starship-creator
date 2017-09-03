@@ -30,6 +30,8 @@ const SET_FRAME = "SET_FRAME";
 const SET_FRAME_MUTATION = "SET_FRAME_MUTATION";
 const SET_POWER_CORE = "SET_POWER_CORE";
 const SET_POWER_CORE_MUTATION = "SET_POWER_CORE_MUTATION";
+const SET_SENSORS = "SET_SENSORS";
+const SET_SENSORS_MUTATION = "SET_SENSORS_MUTATION";
 const SET_SHIELDS = "SET_SHIELDS";
 const SET_SHIELDS_MUTATION = "SET_SHIELDS_MUTATION";
 const SET_THRUSTERS = "SET_THRUSTERS";
@@ -44,6 +46,7 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 	{ action: SET_DRIFT_ENGINE, mutation: SET_DRIFT_ENGINE_MUTATION, shipComponent: "driftEngine" },
 	{ action: SET_FRAME,        mutation: SET_FRAME_MUTATION,        shipComponent: "frame" },
 	{ action: SET_POWER_CORE,   mutation: SET_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
+	{ action: SET_SENSORS,      mutation: SET_SENSORS_MUTATION,      shipComponent: "sensors" },
 	{ action: SET_SHIELDS,      mutation: SET_SHIELDS_MUTATION,      shipComponent: "shields" },
 	{ action: SET_THRUSTERS,    mutation: SET_THRUSTERS_MUTATION,    shipComponent: "thrusters" },
 ].forEach(function (args) {
@@ -110,6 +113,7 @@ export {
 	SET_DRIFT_ENGINE,
 	SET_FRAME,
 	SET_POWER_CORE,
+	SET_SENSORS,
 	SET_SHIELDS,
 	SET_THRUSTERS,
 };
