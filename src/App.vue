@@ -171,6 +171,17 @@ export default {
 					:title="section.title"
 				></single-selector>
 			</div>
+
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
+			<div class="app--section app--section__in-columns"></div>
 		</div>
 	</div>
 </template>

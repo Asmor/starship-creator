@@ -16,6 +16,7 @@ export default {
 .single-item {
 	border: 2px solid #000;
 	cursor: pointer;
+	height: 100%;
 	padding: 5px;
 
 	&:hover {

@@ -189,8 +189,17 @@ export default {
 
 <style lang="scss">
 .single-selector {
+	height: 100%;
+
 	.single-selector--nothing-selected {
-		text-align: center;
+		border: 2px solid #ccc;
+		cursor: pointer;
+		padding: 5px;
+		height: 100%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.single-selector--frame-option {
