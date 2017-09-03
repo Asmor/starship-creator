@@ -25,6 +25,7 @@ let armorSection = {
 		{ name: "Cost", key: "cost", multiplyBySize: true, addendum: "based on size", center: true },
 	],
 	items: armors,
+	removeable: true,
 	selectTitle: "Select armor",
 	selectAction: SET_ARMOR,
 	shipComponentKey: "armor",
@@ -49,6 +50,7 @@ let driftEngineSection = {
 		return size <= maxSize;
 	},
 	items: driftEngines,
+	removeable: true,
 	selectTitle: "Select a drift engine",
 	selectAction: SET_DRIFT_ENGINE,
 	shipComponentKey: "driftEngine",
@@ -127,6 +129,7 @@ export default {
 				:item-disabled="section.itemDisabled"
 				:item-filter="section.itemFilter"
 				:items="section.items"
+				:removeable="section.removeable"
 				:select-action="section.selectAction"
 				:select-title="section.selectTitle"
 				:ship-component-key="section.shipComponentKey"

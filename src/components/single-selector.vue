@@ -64,7 +64,10 @@ export default {
 	},
 	methods: {
 		chooseItem(item) {
-			if ( this.itemAllowed(item) ) {
+			if ( this.removeable && this.isZero(item.cost) ) {
+				this.$store.dispatch(this.selectAction, false);
+				this.$refs[this.modalId].hide();
+			} else if ( this.itemAllowed(item) ) {
 				this.$store.dispatch(this.selectAction, item);
 				this.$refs[this.modalId].hide();
 			}
@@ -101,6 +104,7 @@ export default {
 		"itemDisabled",
 		"itemFilter",
 		"items",
+		"removeable",
 		"selectAction",
 		"selectTitle",
 		"shipComponentKey",
