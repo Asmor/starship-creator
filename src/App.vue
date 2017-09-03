@@ -41,8 +41,6 @@ let driftEngineSection = {
 		let pcu = currentShip.powerCore.pcu || 0;
 		let minPcu = driftEngine.minPcu;
 
-		console.log("Disabling", pcu, minPcu);
-
 		return pcu >= minPcu;
 	},
 	itemFilter: function (currentShip, driftEngine) {
