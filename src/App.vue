@@ -2,6 +2,7 @@
 import {
 	SET_ARMOR,
 	SET_COMPUTER,
+	SET_DEFENSES,
 	SET_DRIFT_ENGINE,
 	SET_POWER_CORE,
 	SET_THRUSTERS,
@@ -11,6 +12,7 @@ import { sizeToInt } from "./util.js";
 
 import armors from "./data/armors.json";
 import computers from "./data/computers.json";
+import defenses from "./data/defensive-countermeasures.json";
 import driftEngines from "./data/drift-engines.json";
 import powerCores from "./data/power-cores.json";
 import thrusters from "./data/thrusters.json";
@@ -46,6 +48,20 @@ let computerSection = {
 	selectAction: SET_COMPUTER,
 	shipComponentKey: "computer",
 	title: "Computer",
+};
+let defensesSection = {
+	columns: [
+		{ name: "Defensive Countermeasures", key: "name" },
+		{ name: "TL Bonus", key: "tlBonus", hideIfZero: true, center: true },
+		{ name: "PCU", key: "pcu", hideIfZero: true, center: true },
+		{ name: "Cost", key: "cost", center: true },
+	],
+	items: defenses,
+	removeable: true,
+	selectTitle: "Select defensive countermeasures",
+	selectAction: SET_DEFENSES,
+	shipComponentKey: "defenses",
+	title: "Defensive Countermeasures",
 };
 let driftEngineSection = {
 	columns: [
@@ -117,6 +133,7 @@ export default {
 				thrustersSection,
 				driftEngineSection,
 				armorSection,
+				defensesSection,
 			],
 		}
 	},

@@ -1,0 +1,18 @@
+[
+	{ "name": "No defenses",    "tlBonus": "+0",  "pcu": 0,  "cost": 0 },
+	{ "name": "Mk 1 defenses",  "tlBonus": "+1",  "pcu": 1,  "cost": 2 },
+	{ "name": "Mk 2 defenses",  "tlBonus": "+2",  "pcu": 1,  "cost": 3 },
+	{ "name": "Mk 3 defenses",  "tlBonus": "+3",  "pcu": 2,  "cost": 4 },
+	{ "name": "Mk 4 defenses",  "tlBonus": "+4",  "pcu": 3,  "cost": 6 },
+	{ "name": "Mk 5 defenses",  "tlBonus": "+5",  "pcu": 4,  "cost": 8 },
+	{ "name": "Mk 6 defenses",  "tlBonus": "+6",  "pcu": 5,  "cost": 11 },
+	{ "name": "Mk 7 defenses",  "tlBonus": "+7",  "pcu": 7,  "cost": 14 },
+	{ "name": "Mk 8 defenses",  "tlBonus": "+8",  "pcu": 9,  "cost": 18 },
+	{ "name": "Mk 9 defenses",  "tlBonus": "+9",  "pcu": 11, "cost": 22 },
+	{ "name": "Mk 10 defenses", "tlBonus": "+10", "pcu": 13, "cost": 27 },
+	{ "name": "Mk 11 defenses", "tlBonus": "+11", "pcu": 16, "cost": 33 },
+	{ "name": "Mk 12 defenses", "tlBonus": "+12", "pcu": 20, "cost": 40 },
+	{ "name": "Mk 13 defenses", "tlBonus": "+13", "pcu": 25, "cost": 50 },
+	{ "name": "Mk 14 defenses", "tlBonus": "+14", "pcu": 32, "cost": 65 },
+	{ "name": "Mk 15 defenses", "tlBonus": "+15", "pcu": 45, "cost": 90 }
+]

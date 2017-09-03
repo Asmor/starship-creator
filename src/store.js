@@ -22,6 +22,8 @@ const SET_ARMOR = "SET_ARMOR";
 const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
 const SET_COMPUTER = "SET_COMPUTER";
 const SET_COMPUTER_MUTATION = "SET_COMPUTER_MUTATION";
+const SET_DEFENSES = "SET_DEFENSES";
+const SET_DEFENSES_MUTATION = "SET_DEFENSES_MUTATION";
 const SET_DRIFT_ENGINE = "SET_DRIFT_ENGINE";
 const SET_DRIFT_ENGINE_MUTATION = "SET_DRIFT_ENGINE_MUTATION";
 const SET_FRAME = "SET_FRAME";
@@ -36,6 +38,7 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 [
 	{ action: SET_ARMOR,        mutation: SET_ARMOR_MUTATION,        shipComponent: "armor" },
 	{ action: SET_COMPUTER,     mutation: SET_COMPUTER_MUTATION,     shipComponent: "computer" },
+	{ action: SET_DEFENSES,     mutation: SET_DEFENSES_MUTATION,     shipComponent: "defenses" },
 	{ action: SET_DRIFT_ENGINE, mutation: SET_DRIFT_ENGINE_MUTATION, shipComponent: "driftEngine" },
 	{ action: SET_FRAME,        mutation: SET_FRAME_MUTATION,        shipComponent: "frame" },
 	{ action: SET_POWER_CORE,   mutation: SET_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
@@ -100,6 +103,7 @@ export {
 	store,
 	SET_ARMOR,
 	SET_COMPUTER,
+	SET_DEFENSES,
 	SET_DRIFT_ENGINE,
 	SET_FRAME,
 	SET_POWER_CORE,
