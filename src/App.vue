@@ -1,5 +1,6 @@
 <script>
 import {
+	store,
 	SET_ARMOR,
 	SET_COMPUTER,
 	SET_DEFENSES,
@@ -22,7 +23,7 @@ import sensors from "./data/sensors.json";
 import thrusters from "./data/thrusters.json";
 
 import selectFrame from "./components/select-frame.vue";
-import singleSelector from "./components/single-selector.vue";
+import shipComponentSection from "./components/ship-component-section.vue";
 
 let armorSection = {
 	columns: [
@@ -156,23 +157,31 @@ let thrustersSection = {
 
 export default {
 	name: 'app',
+	store,
 	data () {
 		return {
-			simpleSections: [
+			coreComponents: [
 				powerCoreSection,
 				computerSection,
 				sensorsSection,
 				thrustersSection,
 				driftEngineSection,
+			],
+			defensiveComponents: [
 				armorSection,
 				defensesSection,
 				shieldsSection,
 			],
 		}
 	},
+	computed: {
+		frameSelected: function () {
+			return this.$store.state.currentShip.frame;
+		},
+	},
 	components: {
 		selectFrame,
-		singleSelector,
+		shipComponentSection,
 	}
 }
 </script>
@@ -187,35 +196,19 @@ export default {
 			<select-frame></select-frame>
 		</div>
 
-		<div class="app--columns">
-			<div
-				v-for="section in simpleSections"
-				class="app--section app--section__in-columns"
-			>
-				<single-selector
-					:columns="section.columns"
-					:item-disabled="section.itemDisabled"
-					:item-filter="section.itemFilter"
-					:items="section.items"
-					:removeable="section.removeable"
-					:select-action="section.selectAction"
-					:select-title="section.selectTitle"
-					:ship-component-key="section.shipComponentKey"
-					:title="section.title"
-				></single-selector>
-			</div>
+		<ship-component-section
+			v-if="frameSelected"
+			title="Core systems"
+			:components="coreComponents"
+		>
+		</ship-component-section>
 
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-			<div class="app--section app--section__in-columns"></div>
-		</div>
+		<ship-component-section
+			v-if="frameSelected"
+			title="Defenses"
+			:components="defensiveComponents"
+		>
+		</ship-component-section>
 	</div>
 </template>
 
