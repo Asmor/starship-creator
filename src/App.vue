@@ -1,6 +1,7 @@
 <script>
 import {
 	SET_ARMOR,
+	SET_COMPUTER,
 	SET_DRIFT_ENGINE,
 	SET_POWER_CORE,
 	SET_THRUSTERS,
@@ -9,6 +10,7 @@ import {
 import { sizeToInt } from "./util.js";
 
 import armors from "./data/armors.json";
+import computers from "./data/computers.json";
 import driftEngines from "./data/drift-engines.json";
 import powerCores from "./data/power-cores.json";
 import thrusters from "./data/thrusters.json";
@@ -30,6 +32,20 @@ let armorSection = {
 	selectAction: SET_ARMOR,
 	shipComponentKey: "armor",
 	title: "Armor",
+};
+let computerSection = {
+	columns: [
+		{ name: "Computer", key: "name" },
+		{ name: "Bonus",    key: "bonus", hideIfZero: true, center: true },
+		{ name: "Nodes",    key: "nodes", hideIfZero: true, center: true },
+		{ name: "PCU",      key: "pcu",   center: true },
+		{ name: "Cost",     key: "cost",  center: true },
+	],
+	items: computers,
+	selectTitle: "Select computer",
+	selectAction: SET_COMPUTER,
+	shipComponentKey: "computer",
+	title: "Computer",
 };
 let driftEngineSection = {
 	columns: [
@@ -97,6 +113,7 @@ export default {
 		return {
 			simpleSections: [
 				powerCoreSection,
+				computerSection,
 				thrustersSection,
 				driftEngineSection,
 				armorSection,

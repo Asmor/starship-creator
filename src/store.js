@@ -20,6 +20,8 @@ let config = {
 
 const SET_ARMOR = "SET_ARMOR";
 const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
+const SET_COMPUTER = "SET_COMPUTER";
+const SET_COMPUTER_MUTATION = "SET_COMPUTER_MUTATION";
 const SET_DRIFT_ENGINE = "SET_DRIFT_ENGINE";
 const SET_DRIFT_ENGINE_MUTATION = "SET_DRIFT_ENGINE_MUTATION";
 const SET_FRAME = "SET_FRAME";
@@ -33,6 +35,7 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 // needed
 [
 	{ action: SET_ARMOR,        mutation: SET_ARMOR_MUTATION,        shipComponent: "armor" },
+	{ action: SET_COMPUTER,     mutation: SET_COMPUTER_MUTATION,     shipComponent: "computer" },
 	{ action: SET_DRIFT_ENGINE, mutation: SET_DRIFT_ENGINE_MUTATION, shipComponent: "driftEngine" },
 	{ action: SET_FRAME,        mutation: SET_FRAME_MUTATION,        shipComponent: "frame" },
 	{ action: SET_POWER_CORE,   mutation: SET_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
@@ -96,6 +99,7 @@ const store = new Vuex.Store(config);
 export {
 	store,
 	SET_ARMOR,
+	SET_COMPUTER,
 	SET_DRIFT_ENGINE,
 	SET_FRAME,
 	SET_POWER_CORE,
