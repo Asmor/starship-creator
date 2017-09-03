@@ -118,11 +118,15 @@ export default {
 
 <template>
 	<div class="single-selector">
-		<b-button
+		<div
 			v-if="$store.state.currentShip.frame && !selectedItem"
-			variant="primary"
-			v-b-modal="modalId"
-		>{{ selectTitle }}</b-button>
+			class="single-selector--nothing-selected"
+		>
+			<b-button
+				variant="primary"
+				v-b-modal="modalId"
+			>{{ selectTitle }}</b-button>
+		</div>
 
 		<single-item
 			v-if="selectedItem"
@@ -185,7 +189,9 @@ export default {
 
 <style lang="scss">
 .single-selector {
-	text-align: left;
+	.single-selector--nothing-selected {
+		text-align: center;
+	}
 
 	.single-selector--frame-option {
 		cursor: pointer;

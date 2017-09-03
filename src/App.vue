@@ -184,10 +184,10 @@ export default {
 
 	.app--section {
 		padding: 10px;
-		flex: 1 1 300px;
 
 		&.app--section__in-columns {
-			text-align: center;
+			flex: 1 1 300px;
+			max-width: 600px;
 		}
 	}
 }
