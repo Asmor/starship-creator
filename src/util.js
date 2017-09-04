@@ -19,9 +19,11 @@ function groupBy({ collection, groupKey, sortKey }) {
 		Object.keys(collection).forEach(collectionKey => putInBucket(collection[collectionKey]));
 	}
 
-	const sorter = sortBy(sortKey);
+	if ( sortKey ) {
+		const sorter = sortBy(sortKey);
 
-	Object.keys(out).forEach(outKey => out[outKey].sort(sorter));
+		Object.keys(out).forEach(outKey => out[outKey].sort(sorter));
+	}
 
 	return out;
 }
@@ -38,9 +40,23 @@ const sizeToInt = {
 	Colossal: 7,
 };
 
+const weaponClassToInt = {
+	Light: 1,
+	Heavy: 3,
+	Capital: 5,
+};
+
+const rangeToInt = {
+	Short: 5,
+	Medium: 10,
+	Long: 20,
+};
+
 export {
 	groupBy,
 	nameSort,
+	rangeToInt,
 	sizeToInt,
 	sortBy,
+	weaponClassToInt,
 }

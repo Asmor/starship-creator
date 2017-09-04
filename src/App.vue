@@ -24,6 +24,7 @@ import thrusters from "./data/thrusters.json";
 
 import selectFrame from "./components/select-frame.vue";
 import shipComponentSection from "./components/ship-component-section.vue";
+import weaponGroup from "./components/weapon-group.vue";
 
 let armorSection = {
 	columns: [
@@ -182,6 +183,7 @@ export default {
 	components: {
 		selectFrame,
 		shipComponentSection,
+		weaponGroup,
 	}
 }
 </script>
@@ -209,6 +211,8 @@ export default {
 			:components="defensiveComponents"
 		>
 		</ship-component-section>
+
+		<weapon-group></weapon-group>
 	</div>
 </template>
 
