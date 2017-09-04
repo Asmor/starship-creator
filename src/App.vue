@@ -24,6 +24,7 @@ import thrusters from "./data/thrusters.json";
 
 import selectFrame from "./components/select-frame.vue";
 import shipComponentSection from "./components/ship-component-section.vue";
+import shipComponentRepeater from "./components/ship-component-repeater.vue";
 import weaponGroup from "./components/weapon-group.vue";
 
 let armorSection = {
@@ -182,6 +183,7 @@ export default {
 	},
 	components: {
 		selectFrame,
+		shipComponentRepeater,
 		shipComponentSection,
 		weaponGroup,
 	}
@@ -201,18 +203,24 @@ export default {
 		<ship-component-section
 			v-if="frameSelected"
 			title="Core systems"
-			:components="coreComponents"
 		>
+			<ship-component-repeater :components="coreComponents"></ship-component-repeater>
 		</ship-component-section>
 
 		<ship-component-section
 			v-if="frameSelected"
 			title="Defenses"
-			:components="defensiveComponents"
 		>
+			<ship-component-repeater :components="defensiveComponents"></ship-component-repeater>
 		</ship-component-section>
 
-		<weapon-group></weapon-group>
+		<ship-component-section
+			v-if="frameSelected"
+			title="Weapons"
+		>
+			<weapon-group></weapon-group>
+		</ship-component-section>
+
 	</div>
 </template>
 
