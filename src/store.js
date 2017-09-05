@@ -11,13 +11,23 @@ Vue.use(Vuex);
 let config = {
 	strict: true,
 	state: {
-		currentShip: {},
+		currentShip: {
+			weapons: {
+				front: [],
+				port: [],
+				starboard: [],
+				aft: [],
+				turret: [],
+			},
+		},
 	},
 	actions: {},
 	mutations: {},
 	getters: {},
 };
 
+const ADD_WEAPON = "ADD_WEAPON";
+const ADD_WEAPON_MUTATION = "ADD_WEAPON_MUTATION";
 const SET_ARMOR = "SET_ARMOR";
 const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
 const SET_COMPUTER = "SET_COMPUTER";
@@ -103,10 +113,19 @@ config.mutations[SET_POWER_CORE_MUTATION] = (state, powerCore) => {
 	}
 };
 
+config.actions[ADD_WEAPON] = ({commit}, {weapon, arc}) => {
+	commit(ADD_WEAPON_MUTATION, {weapon, arc});
+};
+
+config.mutations[ADD_WEAPON_MUTATION] = (state, {weapon, arc}) => {
+	state.currentShip.weapons[arc].push(weapon);
+};
+
 const store = new Vuex.Store(config);
 
 export {
 	store,
+	ADD_WEAPON,
 	SET_ARMOR,
 	SET_COMPUTER,
 	SET_DEFENSES,

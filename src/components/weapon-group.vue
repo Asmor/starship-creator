@@ -1,5 +1,8 @@
 <script>
-import { store } from "../store.js";
+import {
+	store,
+	ADD_WEAPON,
+} from "../store.js";
 import weapons from "../data/weapons.json";
 import {
 	groupBy,
@@ -55,15 +58,31 @@ export default {
 		};
 	},
 	computed: {
+		selectedWeapons: function () {
+			// Sort modifies the original array, so we need to slice to get a new array to sort
+			return this.$store.state.currentShip.weapons[this.arc].slice().sort(nameSort);
+		},
 		selectedFrame: function () {
 			return this.$store.state.currentShip.frame;
 		},
 	},
 	methods: {
-		// chooseFrame(frame) {
-		// 	this.$store.dispatch(SET_FRAME, frame);
-		// 	this.$refs["weapons-modal"].hide();
-		// },
+		addWeapon(weapon) {
+			this.$store.dispatch(ADD_WEAPON, { weapon, arc: this.arc });
+			this.$refs[this.modalId].hide();
+		},
+		weaponText(weapon) {
+			var parts = [];
+
+			parts.push(weapon.range + " range");
+			if ( weapon.type === "Tracking" ) { parts.push("Speed " + weapon.speed); }
+			parts.push(weapon.damage);
+			if ( weapon.specialProperties ) { parts.push(weapon.specialProperties); }
+			parts.push("PCU " + weapon.pcu);
+			parts.push("Cost " + weapon.cost);
+
+			return parts.join("; ");
+		},
 	},
 	components: {
 		singleItem,
@@ -74,23 +93,23 @@ export default {
 
 <template>
 	<div class="weapon-group">
-		<!-- <div
-			v-if="$store.state.currentShip.frame && !selectedItem"
-			class="weapon-group--nothing-selected"
-		>
-			<b-button
-				variant="primary"
-				v-b-modal="modalId"
-			>{{ selectTitle }}</b-button>
-		</div> -->
-
 		<single-item
 			:title="title"
 			no-rollover="true"
 		>
+			<div
+				class="weapon-group--weapon"
+				v-for="weapon in selectedWeapons"
+			>
+				<span class="weapon-group--weapon-title">{{ weapon.name }}</span>
+				<span class="weapon-group--weapon-type">{{ weapon.class }} {{ weapon.type }}</span>
+				<span class="weapon-group--weapon-description">{{ weaponText(weapon) }}</span>
+			</div>
+
 			<b-button
 				variant="primary"
 				v-b-modal="modalId"
+				:disabled="selectedWeapons.length >= 3"
 			>Add weapon</b-button>
 		</single-item>
 
@@ -141,6 +160,7 @@ export default {
 								<tbody
 									v-for="weapon in weaponsOfType"
 									class="weapon-group-modal--body"
+									@click="addWeapon(weapon)"
 								>
 										<!-- :class="{
 											'weapon-group-modal--body__selected': selectedItem.name === item.name,
@@ -190,6 +210,8 @@ export default {
 
 <style lang="scss">
 .weapon-group {
+	height: 100%;
+
 	.weapon-group--frame,
 	.weapon-group--frame-option {
 		cursor: pointer;
@@ -206,6 +228,23 @@ export default {
 		&.weapon-group--frame-option__active {
 			background-color: #cfc;
 		}
+	}
+
+	.weapon-group--weapon {
+		padding: 5px 0;
+	}
+	
+	.weapon-group--weapon-title {
+		font-weight: bold;
+	}
+	
+	.weapon-group--weapon-type {
+		font-variant: small-caps;
+	}
+	
+	.weapon-group--weapon-description {
+		display: inline-block;
+		padding-left: 10px;
 	}
 }
 
