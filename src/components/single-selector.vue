@@ -193,7 +193,6 @@ export default {
 
 	.single-selector--nothing-selected {
 		border: 2px solid #ccc;
-		cursor: pointer;
 		padding: 5px;
 		height: 100%;
 

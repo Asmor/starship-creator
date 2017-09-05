@@ -1,12 +1,15 @@
 <script>
 export default {
 	name: "singleItem",
-	props: ["title"],
+	props: ["noRollover", "title"],
 }
 </script>
 
 <template>
-	<div class="single-item">
+	<div
+		class="single-item"
+		:class="{ 'single-item__with-rollover': !noRollover }"
+	>
 		<div class="single-item--title">{{ title }}</div>
 		<slot></slot>
 	</div>
@@ -15,12 +18,15 @@ export default {
 <style lang="scss">
 .single-item {
 	border: 2px solid #000;
-	cursor: pointer;
 	height: 100%;
 	padding: 5px;
 
-	&:hover {
-		background: #ddd;
+	&.single-item__with-rollover {
+		cursor: pointer;
+
+		&:hover {
+			background: #ddd;
+		}
 	}
 
 	.single-item--title {
