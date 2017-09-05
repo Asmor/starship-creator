@@ -1,6 +1,6 @@
 function sortBy(key) {
 	return function (a, b) {
-		return (a.key > b.key) ? 1 : -1;
+		return (a[key] > b[key]) ? 1 : -1;
 	}
 }
 
