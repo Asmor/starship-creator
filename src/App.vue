@@ -200,27 +200,17 @@ export default {
 			<select-frame></select-frame>
 		</div>
 
-		<ship-component-section
-			v-if="frameSelected"
-			title="Core systems"
-		>
+		<ship-component-section v-if="frameSelected" title="Core systems">
 			<ship-component-repeater :components="coreComponents"></ship-component-repeater>
 		</ship-component-section>
 
-		<ship-component-section
-			v-if="frameSelected"
-			title="Defenses"
-		>
+		<ship-component-section v-if="frameSelected" title="Defenses">
 			<ship-component-repeater :components="defensiveComponents"></ship-component-repeater>
 		</ship-component-section>
 
-		<ship-component-section
-			v-if="frameSelected"
-			title="Weapons"
-		>
-			<weapon-group></weapon-group>
+		<ship-component-section v-if="frameSelected"title="Weapons">
+			<weapon-group arc="front" title="Front arc"></weapon-group>
 		</ship-component-section>
-
 	</div>
 </template>
 
