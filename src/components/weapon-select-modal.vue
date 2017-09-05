@@ -1,0 +1,220 @@
+<script>
+import {
+	store,
+	ADD_WEAPON,
+} from "../store.js";
+import weapons from "../data/weapons.json";
+import {
+	groupBy,
+	nameSort,
+	weaponClassToInt,
+	rangeToInt,
+} from "../util.js";
+
+import {
+	registerModal, 
+	WEAPON_SELECT_MODAL, 
+} from "../modal-handler.js";
+
+const weaponSort = (a, b) => {
+	// Sort by Class, then by Type, then by Range, then by Name
+	if ( a.class !== b.class ) {
+		return weaponClassToInt[a.class] - weaponClassToInt[b.class];
+	}
+
+	if ( a.type !== b.type ) {
+		return (a.type > b.type) ? 1 : -1;
+	}
+
+	if ( a.range !== b.range ) {
+		return rangeToInt[a.range] - rangeToInt[b.range];
+	}
+
+	return (a.name > b.name) ? 1 : -1;
+
+};
+
+weapons.sort(weaponSort);
+
+let weaponsByClass = groupBy({
+	collection: weapons,
+	groupKey: "class",
+});
+
+Object.keys(weaponsByClass).forEach((weaponClass) => {
+	weaponsByClass[weaponClass] = groupBy({
+		collection: weaponsByClass[weaponClass],
+		groupKey: "type",
+	});
+});
+
+export default {
+	name: "weaponGroup",
+	store,
+	data () {
+		return {
+			arc: null,
+			weaponsByClass,
+			modalId: "weapon-select-modal",
+		};
+	},
+	computed: {},
+	mounted: function () {
+		registerModal({
+			modalId: WEAPON_SELECT_MODAL,
+			opener: (args) => {
+				this.arc = args.arc;
+				this.$refs[this.modalId].show();
+			},
+		});
+	},
+	methods: {
+		addWeapon(weapon) {
+			this.$store.dispatch(ADD_WEAPON, { weapon, arc: this.arc });
+			this.$refs[this.modalId].hide();
+		},
+	},
+	components: {},
+};
+</script>
+
+<template>
+	<div class="weapon-select">
+		<b-modal
+			:id="modalId"
+			class="weapon-select-modal"
+			:ref="modalId"
+			title="Choose weapon"
+		>
+			<b-tabs pills>
+				<b-tab
+					v-for="(weaponsOfClass, className, index) in weaponsByClass"
+					:key="index"
+					:title="className"
+				>
+					<b-tabs pills>
+						<b-tab
+							v-for="(weaponsOfType, weaponType, typeIndex) in weaponsOfClass"
+							:key="typeIndex"
+							:title="weaponType"
+						>
+							<table class="weapon-select-modal--table">
+								<thead>
+									<tr class="weapon-select-modal--header">
+										<td class="weapon-select-modal--column__centered">
+											Range
+										</td>
+										<td
+											v-if="weaponType === 'Tracking'"
+											class="weapon-select-modal--column__centered"
+										>
+											Speed
+										</td>
+										<td class="weapon-select-modal--column__centered">
+											Damage
+										</td>
+										<td class="weapon-select-modal--column__centered">
+											PCU
+										</td>
+										<td class="weapon-select-modal--column__centered">
+											Cost
+										</td>
+										<td>
+											Special Properties
+										</td>
+									</tr>
+								</thead>
+								<tbody
+									v-for="weapon in weaponsOfType"
+									class="weapon-select-modal--body"
+									@click="addWeapon(weapon)"
+								>
+									<tr>
+										<td
+											class="weapon-select-modal--weapon-name"
+											:colspan="(weaponType === 'Tracking') ? 6 : 5"
+										>
+											{{ weapon.name }}
+										</td>
+									</tr>
+									<tr>
+										<td class="weapon-select-modal--column__centered">
+											{{ weapon.range }}
+										</td>
+										<td
+											v-if="weaponType === 'Tracking'"
+											class="weapon-select-modal--column__centered"
+										>
+											{{ weapon.speed }}
+										</td>
+										<td class="weapon-select-modal--column__centered">
+											{{ weapon.damage }}
+										</td>
+										<td class="weapon-select-modal--column__centered">
+											{{ weapon.pcu }}
+										</td>
+										<td class="weapon-select-modal--column__centered">
+											{{ weapon.cost }}
+										</td>
+										<td>
+											{{ weapon.specialProperties }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</b-tab>
+					</b-tabs>
+				</b-tab>
+			</b-tabs>
+			<div slot="modal-footer"></div>
+		</b-modal>
+	</div>
+</template>
+
+<style lang="scss">
+.weapon-select-modal {
+	.weapon-select-modal--table {
+		width: 100%;
+	}
+
+	.weapon-select-modal--header,
+	.weapon-select-modal--body {
+		& > td {
+			padding: 5px;
+		}
+	}
+
+	.weapon-select-modal--header {
+		font-weight: bold;
+		background-color: #000;
+		color: #fff;
+	}
+
+	.weapon-select-modal--body {
+		cursor: pointer;
+
+		&:hover {
+			background-color: #ddd;
+		}
+
+		&.weapon-select-modal--body__selected {
+			background-color: #dfd;
+		}
+
+		&.weapon-select-modal--body__disabled {
+			background-color: inherit;
+			cursor: not-allowed;
+			color: #ccc;
+		}
+	}
+
+	.weapon-select-modal--weapon-name {
+		font-weight: bold;
+	}
+
+	.weapon-select-modal--column__centered {
+		text-align: center;
+	}
+}
+
+</style>
