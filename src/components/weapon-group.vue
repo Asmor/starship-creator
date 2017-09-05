@@ -86,9 +86,12 @@ export default {
 
 		<single-item
 			:title="title"
-			v-b-modal="modalId"
+			no-rollover="true"
 		>
-			Placeholder weapons
+			<b-button
+				variant="primary"
+				v-b-modal="modalId"
+			>Add weapon</b-button>
 		</single-item>
 
 		<b-modal
