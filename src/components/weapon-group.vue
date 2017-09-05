@@ -68,6 +68,7 @@ export default {
 	components: {
 		singleItem,
 	},
+	props: ["arc", "title"],
 };
 </script>
 
@@ -84,7 +85,7 @@ export default {
 		</div> -->
 
 		<single-item
-			title="weapons title"
+			:title="title"
 			v-b-modal="modalId"
 		>
 			Placeholder weapons

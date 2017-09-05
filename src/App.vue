@@ -209,7 +209,33 @@ export default {
 		</ship-component-section>
 
 		<ship-component-section v-if="frameSelected"title="Weapons">
-			<weapon-group arc="front" title="Front arc"></weapon-group>
+			<div class="app--flex-layout">
+				<div class="app--flex-item">
+					<weapon-group arc="front" title="Front arc"></weapon-group>
+				</div>
+				<div class="app--flex-item">
+					<weapon-group arc="port" title="Port arc"></weapon-group>
+				</div>
+				<div class="app--flex-item">
+					<weapon-group arc="starboard" title="Starboard arc"></weapon-group>
+				</div>
+				<div class="app--flex-item">
+					<weapon-group arc="aft" title="Aft arc"></weapon-group>
+				</div>
+				<div class="app--flex-item">
+					<weapon-group arc="turret" title="Turret"></weapon-group>
+				</div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+				<div class="app--flex-item app--flex-item__placeholder"></div>
+			</div>
 		</ship-component-section>
 	</div>
 </template>
@@ -227,6 +253,20 @@ export default {
 		&.app--section__in-columns {
 			flex: 1 1 300px;
 			max-width: 600px;
+		}
+	}
+
+	.app--flex-layout {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.app--flex-item {
+		flex: 1 1 300px;
+		padding: 10px;
+
+		&.app--flex-item__placeholder {
+			padding: 0;
 		}
 	}
 }
