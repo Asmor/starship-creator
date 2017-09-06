@@ -1,7 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { sizeToInt } from "./util.js";
+import {
+	sizeToInt,
+	weaponClassToInt,
+} from "./util.js";
 
 import powerCores from "./data/power-cores.json";
 import thrusters from "./data/thrusters.json";
@@ -87,6 +90,7 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 
 config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 	let ship = state.currentShip;
+	let frameSizeInt = sizeToInt[frame.size];
 	ship.frame = frame;
 
 	// Many components are only valid for particular ship sizes, so when we change frame size we
@@ -109,6 +113,23 @@ config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 			config.mutations[SET_DRIFT_ENGINE_MUTATION](state, false);
 		}
 	}
+
+	["front", "port", "starboard", "aft", "turret"].forEach(arc => {
+		let weaponsToRemove = [];
+
+		state.currentShip.weapons[arc].forEach(weapon => {
+			let weaponSizeInt = weaponClassToInt[weapon.class];
+
+			// Get all weapons that need to be removed first, then remove them, so we don't mutate
+			// array while we're searching through it
+			if ( weaponSizeInt > frameSizeInt ) {
+				weaponsToRemove.push(weapon);
+			}
+
+		});
+
+		weaponsToRemove.forEach(weapon => config.mutations[REMOVE_WEAPON_MUTATION](state, { arc, weapon }));
+	});
 };
 
 config.mutations[SET_POWER_CORE_MUTATION] = (state, powerCore) => {

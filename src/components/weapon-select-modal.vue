@@ -9,6 +9,7 @@ import {
 	nameSort,
 	weaponClassToInt,
 	rangeToInt,
+	sizeToInt,
 } from "../util.js";
 
 import {
@@ -74,6 +75,11 @@ export default {
 			this.$store.dispatch(ADD_WEAPON, { weapon, arc: this.arc });
 			this.$refs[this.modalId].hide();
 		},
+		allowedClasses() {
+			let shipSizeInt = sizeToInt[this.$store.state.currentShip.frame.size]
+			return this.weaponClasses
+				.filter(weaponClass => weaponClassToInt[weaponClass] <= shipSizeInt);
+		},
 		getWeapons({ weaponClass, type }) {
 			let byClass = weaponsByClass[weaponClass] || {};
 			return byClass[type];
@@ -93,7 +99,7 @@ export default {
 		>
 			<b-tabs pills>
 				<b-tab
-					v-for="(weaponClass, index) in weaponClasses"
+					v-for="(weaponClass, index) in allowedClasses()"
 					:key="index"
 					:title="weaponClass"
 				>
