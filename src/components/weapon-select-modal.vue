@@ -49,7 +49,7 @@ Object.keys(weaponsByClass).forEach((weaponClass) => {
 });
 
 export default {
-	name: "weaponGroup",
+	name: "weaponSelectModal",
 	store,
 	data () {
 		return {

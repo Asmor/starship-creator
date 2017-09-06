@@ -10,6 +10,10 @@ import {
 	weaponClassToInt,
 	rangeToInt,
 } from "../util.js";
+import {
+	openModal,
+	WEAPON_SELECT_MODAL,
+} from "../modal-handler.js";
 
 import singleItem from "./single-item.vue";
 
@@ -67,9 +71,11 @@ export default {
 		},
 	},
 	methods: {
-		addWeapon(weapon) {
-			this.$store.dispatch(ADD_WEAPON, { weapon, arc: this.arc });
-			this.$refs[this.modalId].hide();
+		showWeaponSelectModal() {
+			openModal({
+				modalId: WEAPON_SELECT_MODAL,
+				args: { arc: this.arc },
+			});
 		},
 		weaponText(weapon) {
 			var parts = [];
@@ -108,103 +114,10 @@ export default {
 
 			<b-button
 				variant="primary"
-				v-b-modal="modalId"
+				@click="showWeaponSelectModal()"
 				:disabled="selectedWeapons.length >= 3"
 			>Add weapon</b-button>
 		</single-item>
-
-		<b-modal
-			:id="modalId"
-			class="weapon-group-modal"
-			:ref="modalId"
-			title="Choose weapon"
-		>
-			<b-tabs pills>
-				<b-tab
-					v-for="(weaponsOfClass, className, index) in weaponsByClass"
-					:key="index"
-					:title="className"
-				>
-					<b-tabs pills>
-						<b-tab
-							v-for="(weaponsOfType, weaponType, typeIndex) in weaponsOfClass"
-							:key="typeIndex"
-							:title="weaponType"
-						>
-							<table class="weapon-group-modal--table">
-								<thead>
-									<tr class="weapon-group-modal--header">
-										<td class="weapon-group-modal--column__centered">
-											Range
-										</td>
-										<td
-											v-if="weaponType === 'Tracking'"
-											class="weapon-group-modal--column__centered"
-										>
-											Speed
-										</td>
-										<td class="weapon-group-modal--column__centered">
-											Damage
-										</td>
-										<td class="weapon-group-modal--column__centered">
-											PCU
-										</td>
-										<td class="weapon-group-modal--column__centered">
-											Cost
-										</td>
-										<td>
-											Special Properties
-										</td>
-									</tr>
-								</thead>
-								<tbody
-									v-for="weapon in weaponsOfType"
-									class="weapon-group-modal--body"
-									@click="addWeapon(weapon)"
-								>
-										<!-- :class="{
-											'weapon-group-modal--body__selected': selectedItem.name === item.name,
-										}" -->
-										<!-- @click="chooseItem(item)" -->
-									<tr>
-										<td
-											class="weapon-group-modal--weapon-name"
-											:colspan="(weaponType === 'Tracking') ? 6 : 5"
-										>
-											{{ weapon.name }}
-										</td>
-									</tr>
-									<tr>
-										<td class="weapon-group-modal--column__centered">
-											{{ weapon.range }}
-										</td>
-										<td
-											v-if="weaponType === 'Tracking'"
-											class="weapon-group-modal--column__centered"
-										>
-											{{ weapon.speed }}
-										</td>
-										<td class="weapon-group-modal--column__centered">
-											{{ weapon.damage }}
-										</td>
-										<td class="weapon-group-modal--column__centered">
-											{{ weapon.pcu }}
-										</td>
-										<td class="weapon-group-modal--column__centered">
-											{{ weapon.cost }}
-										</td>
-										<td>
-											{{ weapon.specialProperties }}
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</b-tab>
-					</b-tabs>
-				</b-tab>
-			</b-tabs>
-			<div slot="modal-footer"></div>
-		</b-modal>
 	</div>
 </template>
 
@@ -247,50 +160,4 @@ export default {
 		padding-left: 10px;
 	}
 }
-
-.weapon-group-modal {
-	.weapon-group-modal--table {
-		width: 100%;
-	}
-
-	.weapon-group-modal--header,
-	.weapon-group-modal--body {
-		& > td {
-			padding: 5px;
-		}
-	}
-
-	.weapon-group-modal--header {
-		font-weight: bold;
-		background-color: #000;
-		color: #fff;
-	}
-
-	.weapon-group-modal--body {
-		cursor: pointer;
-
-		&:hover {
-			background-color: #ddd;
-		}
-
-		&.weapon-group-modal--body__selected {
-			background-color: #dfd;
-		}
-
-		&.weapon-group-modal--body__disabled {
-			background-color: inherit;
-			cursor: not-allowed;
-			color: #ccc;
-		}
-	}
-
-	.weapon-group-modal--weapon-name {
-		font-weight: bold;
-	}
-
-	.weapon-group-modal--column__centered {
-		text-align: center;
-	}
-}
-
 </style>

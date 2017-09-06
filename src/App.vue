@@ -26,6 +26,7 @@ import selectFrame from "./components/select-frame.vue";
 import shipComponentSection from "./components/ship-component-section.vue";
 import shipComponentRepeater from "./components/ship-component-repeater.vue";
 import weaponGroup from "./components/weapon-group.vue";
+import weaponSelectModal from "./components/weapon-select-modal.vue";
 
 let armorSection = {
 	columns: [
@@ -186,6 +187,7 @@ export default {
 		shipComponentRepeater,
 		shipComponentSection,
 		weaponGroup,
+		weaponSelectModal,
 	}
 }
 </script>
@@ -237,6 +239,8 @@ export default {
 				<div class="app--flex-item app--flex-item__placeholder"></div>
 			</div>
 		</ship-component-section>
+
+		<weapon-select-modal></weapon-select-modal>
 	</div>
 </template>
 
