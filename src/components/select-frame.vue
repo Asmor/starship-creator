@@ -2,7 +2,11 @@
 import { store, SET_FRAME } from "../store.js";
 import frames from "../data/frames.json";
 import frame from "./frame.vue";
-import { groupBy, nameSort } from "../util.js";
+import {
+	groupBy,
+	nameSort,
+	sizeToInt,
+} from "../util.js";
 
 const generateMountsText = mounts => {
 	let arcs = [];
@@ -33,17 +37,29 @@ const generateMountsText = mounts => {
 
 frames.forEach(frame => frame.mountsText = generateMountsText(frame.mounts));
 
+let framesBySize = groupBy({
+	collection: frames,
+	groupKey: "size",
+	sortKey: "cost",
+});
+window.framesBySize = framesBySize;
+
 export default {
 	name: "selectFrame",
 	store,
 	data () {
 		return {
 			frames: frames.sort(nameSort),
-			framesBySize: groupBy({
-				collection: frames,
-				groupKey: "size",
-				sortKey: "cost",
-			}),
+			frameSizes: [
+				"Tiny",
+				"Small",
+				"Medium",
+				"Large",
+				"Huge",
+				"Gargantuan",
+				"Colossal",
+			],
+			framesBySize,
 		};
 	},
 	computed: {
@@ -89,16 +105,16 @@ export default {
 		>
 			<b-tabs pills>
 				<b-tab
-					v-for="(framesOfSize, sizeName, index) in framesBySize"
+					v-for="(size, index) in frameSizes"
 					:key="index"
-					:title="sizeName"
+					:title="size"
 				>
 					<div
 						class="select-frame--frame-option"
 						:class="{
 							'select-frame--frame-option__active': frame.name === selectedFrame.name
 						}"
-						v-for="frame in framesOfSize"
+						v-for="frame in framesBySize[size]"
 						@click="chooseFrame(frame)"
 					>
 						<frame :frame="frame">

@@ -3,7 +3,6 @@ import {
 	store,
 	ADD_WEAPON,
 } from "../store.js";
-import weapons from "../data/weapons.json";
 import {
 	groupBy,
 	nameSort,
@@ -37,21 +36,7 @@ const weaponSort = (a, b) => {
 
 };
 
-weapons.sort(weaponSort);
-
 let modalCounter = 0;
-
-let weaponsByClass = groupBy({
-	collection: weapons,
-	groupKey: "class",
-});
-
-Object.keys(weaponsByClass).forEach((weaponClass) => {
-	weaponsByClass[weaponClass] = groupBy({
-		collection: weaponsByClass[weaponClass],
-		groupKey: "type",
-	});
-});
 
 function makeLinked(weapon) {
 	return {
@@ -72,11 +57,7 @@ export default {
 	name: "weaponGroup",
 	store,
 	data () {
-		return {
-			weapons,
-			weaponsByClass,
-			modalId: "weapon-group-modal" + modalCounter++,
-		};
+		return {};
 	},
 	computed: {
 		selectedWeapons: function () {

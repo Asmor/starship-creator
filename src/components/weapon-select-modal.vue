@@ -54,8 +54,9 @@ export default {
 	data () {
 		return {
 			arc: null,
-			weaponsByClass,
 			modalId: "weapon-select-modal",
+			weaponClasses: "Light Heavy Capital".split(" "),
+			weaponTypes: "Direct-fire Tracking".split(" "),
 		};
 	},
 	computed: {},
@@ -73,6 +74,10 @@ export default {
 			this.$store.dispatch(ADD_WEAPON, { weapon, arc: this.arc });
 			this.$refs[this.modalId].hide();
 		},
+		getWeapons({ weaponClass, type }) {
+			let byClass = weaponsByClass[weaponClass] || {};
+			return byClass[type];
+		},
 	},
 	components: {},
 };
@@ -88,15 +93,15 @@ export default {
 		>
 			<b-tabs pills>
 				<b-tab
-					v-for="(weaponsOfClass, className, index) in weaponsByClass"
+					v-for="(weaponClass, index) in weaponClasses"
 					:key="index"
-					:title="className"
+					:title="weaponClass"
 				>
 					<b-tabs pills>
 						<b-tab
-							v-for="(weaponsOfType, weaponType, typeIndex) in weaponsOfClass"
+							v-for="(type, typeIndex) in weaponTypes"
 							:key="typeIndex"
-							:title="weaponType"
+							:title="type"
 						>
 							<table class="weapon-select-modal--table">
 								<thead>
@@ -105,7 +110,7 @@ export default {
 											Range
 										</td>
 										<td
-											v-if="weaponType === 'Tracking'"
+											v-if="type === 'Tracking'"
 											class="weapon-select-modal--column__centered"
 										>
 											Speed
@@ -125,14 +130,14 @@ export default {
 									</tr>
 								</thead>
 								<tbody
-									v-for="weapon in weaponsOfType"
+									v-for="weapon in getWeapons({ weaponClass, type })"
 									class="weapon-select-modal--body"
 									@click="addWeapon(weapon)"
 								>
 									<tr>
 										<td
 											class="weapon-select-modal--weapon-name"
-											:colspan="(weaponType === 'Tracking') ? 6 : 5"
+											:colspan="(type === 'Tracking') ? 6 : 5"
 										>
 											{{ weapon.name }}
 										</td>
@@ -142,7 +147,7 @@ export default {
 											{{ weapon.range }}
 										</td>
 										<td
-											v-if="weaponType === 'Tracking'"
+											v-if="type === 'Tracking'"
 											class="weapon-select-modal--column__centered"
 										>
 											{{ weapon.speed }}
