@@ -12,6 +12,7 @@ import {
 } from "../util.js";
 import {
 	openModal,
+	WEAPON_OPTIONS_MODAL,
 	WEAPON_SELECT_MODAL,
 } from "../modal-handler.js";
 
@@ -71,6 +72,12 @@ export default {
 		},
 	},
 	methods: {
+		showWeaponOptionsModal(weapon) {
+			openModal({
+				modalId: WEAPON_OPTIONS_MODAL,
+				args: { arc: this.arc, weapon },
+			});
+		},
 		showWeaponSelectModal() {
 			openModal({
 				modalId: WEAPON_SELECT_MODAL,
@@ -106,6 +113,7 @@ export default {
 			<div
 				class="weapon-group--weapon"
 				v-for="weapon in selectedWeapons"
+				@click="showWeaponOptionsModal(weapon)"
 			>
 				<span class="weapon-group--weapon-title">{{ weapon.name }}</span>
 				<span class="weapon-group--weapon-type">{{ weapon.class }} {{ weapon.type }}</span>

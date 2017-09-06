@@ -26,6 +26,7 @@ import selectFrame from "./components/select-frame.vue";
 import shipComponentSection from "./components/ship-component-section.vue";
 import shipComponentRepeater from "./components/ship-component-repeater.vue";
 import weaponGroup from "./components/weapon-group.vue";
+import weaponOptionsModal from "./components/weapon-options-modal.vue";
 import weaponSelectModal from "./components/weapon-select-modal.vue";
 
 let armorSection = {
@@ -187,6 +188,7 @@ export default {
 		shipComponentRepeater,
 		shipComponentSection,
 		weaponGroup,
+		weaponOptionsModal,
 		weaponSelectModal,
 	}
 }
@@ -241,6 +243,7 @@ export default {
 		</ship-component-section>
 
 		<weapon-select-modal></weapon-select-modal>
+		<weapon-options-modal></weapon-options-modal>
 	</div>
 </template>
 

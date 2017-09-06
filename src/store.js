@@ -28,6 +28,10 @@ let config = {
 
 const ADD_WEAPON = "ADD_WEAPON";
 const ADD_WEAPON_MUTATION = "ADD_WEAPON_MUTATION";
+const LINK_WEAPON = "LINK_WEAPON";
+const LINK_WEAPON_MUTATION = "LINK_WEAPON_MUTATION";
+const REMOVE_WEAPON = "REMOVE_WEAPON";
+const REMOVE_WEAPON_MUTATION = "REMOVE_WEAPON_MUTATION";
 const SET_ARMOR = "SET_ARMOR";
 const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
 const SET_COMPUTER = "SET_COMPUTER";
@@ -113,12 +117,41 @@ config.mutations[SET_POWER_CORE_MUTATION] = (state, powerCore) => {
 	}
 };
 
-config.actions[ADD_WEAPON] = ({commit}, {weapon, arc}) => {
-	commit(ADD_WEAPON_MUTATION, {weapon, arc});
-};
+[
+	{ action: ADD_WEAPON,    mutation: ADD_WEAPON_MUTATION },
+	{ action: LINK_WEAPON,   mutation: LINK_WEAPON_MUTATION },
+	{ action: REMOVE_WEAPON, mutation: REMOVE_WEAPON_MUTATION },
+].forEach(function (args) {
+	config.actions[args.action] = ({commit}, {weapon, arc}) => {
+		commit(args.mutation, {weapon, arc});
+	};
+});
 
 config.mutations[ADD_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 	state.currentShip.weapons[arc].push(weapon);
+};
+
+config.mutations[LINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
+	// state.currentShip.weapons[arc].push(weapon);
+	console.warn("LINK_WEAPON_MUTATION not yet implemented");
+};
+
+config.mutations[REMOVE_WEAPON_MUTATION] = (state, {weapon, arc}) => {
+	let weapons = state.currentShip.weapons[arc];
+	let deleteIndex = -1;
+
+	let found = weapons.some((shipWeapon, index) => {
+		if ( shipWeapon.name === weapon.name ) {
+			deleteIndex = index;
+			return true;
+		}
+	});
+
+	if ( found ) {
+		weapons.splice(deleteIndex, 1);
+	} else {
+		console.warn("Couldn't find", shipWeapon, "in arc:", arc);
+	}
 };
 
 const store = new Vuex.Store(config);
@@ -126,6 +159,8 @@ const store = new Vuex.Store(config);
 export {
 	store,
 	ADD_WEAPON,
+	LINK_WEAPON,
+	REMOVE_WEAPON,
 	SET_ARMOR,
 	SET_COMPUTER,
 	SET_DEFENSES,

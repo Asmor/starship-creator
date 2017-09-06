@@ -1,3 +1,4 @@
+let WEAPON_OPTIONS_MODAL = "WEAPON_OPTIONS_MODAL";
 let WEAPON_SELECT_MODAL = "WEAPON_SELECT_MODAL";
 
 let registeredModals = {};
@@ -19,5 +20,6 @@ const registerModal = ({ modalId, opener }) => {
 export {
 	openModal,
 	registerModal,
+	WEAPON_OPTIONS_MODAL,
 	WEAPON_SELECT_MODAL,
 };
