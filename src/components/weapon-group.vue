@@ -109,6 +109,9 @@ export default {
 		},
 	},
 	methods: {
+		canAdd() {
+			return this.$store.state.currentShip.weapons[this.arc].length < 3;
+		},
 		showWeaponOptionsModal(weapon) {
 			// Linked weapons are a modified version which have the original as a special property
 			if ( weapon.original ) {
@@ -165,7 +168,7 @@ export default {
 			<b-button
 				variant="primary"
 				@click="showWeaponSelectModal()"
-				:disabled="selectedWeapons.length >= 3"
+				:disabled="!canAdd()"
 			>Add weapon</b-button>
 		</single-item>
 	</div>

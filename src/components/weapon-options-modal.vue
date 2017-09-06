@@ -3,6 +3,7 @@ import {
 	store,
 	LINK_WEAPON,
 	REMOVE_WEAPON,
+	UNLINK_WEAPON,
 } from "../store.js";
 
 import {
@@ -46,9 +47,11 @@ export default {
 				return sum;
 			}, 0);
 
-			console.log("Sum:", matchingWeapons);
-
 			return matchingWeapons >= 2;
+		},
+		isLinked(weapon) {
+			var linked = this.$store.state.currentShip.weaponLinks[this.arc];
+			return !!(linked && linked.name === weapon.name);
 		},
 		linkWeapon() {
 			this.$store.dispatch(LINK_WEAPON, { weapon: this.weapon, arc: this.arc });
@@ -56,6 +59,10 @@ export default {
 		},
 		removeWeapon() {
 			this.$store.dispatch(REMOVE_WEAPON, { weapon: this.weapon, arc: this.arc });
+			this.$refs[this.modalId].hide();
+		},
+		unlinkWeapon() {
+			this.$store.dispatch(UNLINK_WEAPON, { weapon: this.weapon, arc: this.arc });
 			this.$refs[this.modalId].hide();
 		},
 	},
@@ -71,7 +78,10 @@ export default {
 			:ref="modalId"
 			:title="weapon.name + ' (' + arc + ')'"
 		>
-			<div class="weapon-options-modal--button">
+			<div
+				class="weapon-options-modal--button"
+				v-if="!isLinked(weapon)"
+			>
 				<b-button
 					variant="primary"
 					@click="linkWeapon()"
@@ -79,6 +89,17 @@ export default {
 				>Link</b-button> Cost: {{ Math.floor(weapon.cost / 2) }}
 				(requires two identical weapons)
 			</div>
+
+			<div
+				class="weapon-options-modal--button"
+				v-if="isLinked(weapon)"
+			>
+				<b-button
+					variant="primary"
+					@click="unlinkWeapon()"
+				>Unlink</b-button>
+			</div>
+
 			<div class="weapon-options-modal--button">
 				<b-button
 					variant="danger"
