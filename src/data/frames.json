@@ -42,7 +42,7 @@
         "aft": [1]
     },
     "expansionBays": 0,
-    "restrictions": "1 front weapon mount may only be a tracking weapon",
+    "restrictions": "1 forward weapon mount may only be a tracking weapon",
     "minCrew": 1,
     "maxCrew": 2,
     "cost": 8

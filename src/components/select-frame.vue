@@ -4,6 +4,7 @@ import frames from "../data/frames.json";
 import frame from "./frame.vue";
 import {
 	groupBy,
+	mountIntsToText,
 	nameSort,
 	sizeToInt,
 } from "../util.js";
@@ -13,22 +14,7 @@ const generateMountsText = mounts => {
 
 	["forward", "port", "starboard", "aft", "turret"].forEach(arc => {
 		if ( mounts[arc] && mounts[arc].length ) {
-			// light = 1, heavy = 2, capital = 3
-			let classCounts = [null, 0, 0, 0];
-			let classTexts = [];
-			mounts[arc].forEach(mount => classCounts[mount]++);
-
-			[
-				{ val: 3, text: "capital" },
-				{ val: 2, text: "heavy" },
-				{ val: 1, text: "light" },
-			].forEach(def => {
-				if ( classCounts[def.val] ) {
-					classTexts.push(classCounts[def.val] + " " + def.text);
-				}
-			});
-
-			arcs.push(arc + " (" + classTexts.join(", ") + ")");
+			arcs.push(arc + " (" + mountIntsToText(mounts[arc]) + ")");
 		}
 	});
 

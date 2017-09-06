@@ -28,6 +28,29 @@ function groupBy({ collection, groupKey, sortKey }) {
 	return out;
 }
 
+function mountIntsToText(mounts) {
+	if ( !(mounts instanceof Array) || !mounts.length ) {
+		return "none";
+	}
+
+	// light = 1, heavy = 2, capital = 3
+	let classCounts = [null, 0, 0, 0];
+	let classTexts = [];
+	mounts.forEach(mount => classCounts[mount]++);
+
+	[
+		{ val: 3, text: "capital" },
+		{ val: 2, text: "heavy" },
+		{ val: 1, text: "light" },
+	].forEach(def => {
+		if ( classCounts[def.val] ) {
+			classTexts.push(classCounts[def.val] + " " + def.text);
+		}
+	});
+
+	return classTexts.join(", ");
+}
+
 function pluralize(s) {
 	if ( s.match(/battery$/) ) {
 		return s.replace(/y$/, "ies");
@@ -54,6 +77,14 @@ const weaponClassToInt = {
 	Capital: 5,
 };
 
+// The JSON mounts use 1, 2, and 3 for mount classes. I should clean that up so they also use the
+// 1/3/5 stuff
+const weaponClassToMountInt = {
+	Light: 1,
+	Heavy: 2,
+	Capital: 3,
+};
+
 const rangeToInt = {
 	Short: 5,
 	Medium: 10,
@@ -62,10 +93,12 @@ const rangeToInt = {
 
 export {
 	groupBy,
+	mountIntsToText,
 	nameSort,
 	pluralize,
 	rangeToInt,
 	sizeToInt,
 	sortBy,
 	weaponClassToInt,
+	weaponClassToMountInt,
 }

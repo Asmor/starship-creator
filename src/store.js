@@ -16,14 +16,14 @@ let config = {
 	state: {
 		currentShip: {
 			weapons: {
-				front: [],
+				forward: [],
 				port: [],
 				starboard: [],
 				aft: [],
 				turret: [],
 			},
 			weaponLinks: {
-				front: false,
+				forward: false,
 				port: false,
 				starboard: false,
 				aft: false,
@@ -114,14 +114,14 @@ config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 		}
 	}
 
-	["front", "port", "starboard", "aft", "turret"].forEach(arc => {
+	["forward", "port", "starboard", "aft", "turret"].forEach(arc => {
 		let weaponsToRemove = [];
 
+		// Get all weapons that need to be removed first, then remove them, so we don't mutate array
+		// while we're searching through it
 		state.currentShip.weapons[arc].forEach(weapon => {
 			let weaponSizeInt = weaponClassToInt[weapon.class];
 
-			// Get all weapons that need to be removed first, then remove them, so we don't mutate
-			// array while we're searching through it
 			if ( weaponSizeInt > frameSizeInt ) {
 				weaponsToRemove.push(weapon);
 			}

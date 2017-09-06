@@ -77,8 +77,16 @@ export default {
 		},
 		allowedClasses() {
 			let shipSizeInt = sizeToInt[this.$store.state.currentShip.frame.size]
+
 			return this.weaponClasses
-				.filter(weaponClass => weaponClassToInt[weaponClass] <= shipSizeInt);
+				.filter(weaponClass => {
+					// Turrets can't have capital weapons
+					if ( this.arc === "turret" && weaponClass === "Capital" ) {
+						return false;
+					}
+
+					return weaponClassToInt[weaponClass] <= shipSizeInt;
+				});
 		},
 		getWeapons({ weaponClass, type }) {
 			let byClass = weaponsByClass[weaponClass] || {};

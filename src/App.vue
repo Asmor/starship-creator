@@ -215,7 +215,7 @@ export default {
 		<ship-component-section v-if="frameSelected"title="Weapons">
 			<div class="app--flex-layout">
 				<div class="app--flex-item">
-					<weapon-group arc="front" title="Front arc"></weapon-group>
+					<weapon-group arc="forward" title="Forward arc"></weapon-group>
 				</div>
 				<div class="app--flex-item">
 					<weapon-group arc="port" title="Port arc"></weapon-group>
