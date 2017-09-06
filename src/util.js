@@ -28,6 +28,14 @@ function groupBy({ collection, groupKey, sortKey }) {
 	return out;
 }
 
+function pluralize(s) {
+	if ( s.match(/battery$/) ) {
+		return s.replace(/y$/, "ies");
+	}
+
+	return s + "s";
+}
+
 const nameSort = sortBy("name");
 
 const sizeToInt = {
@@ -55,6 +63,7 @@ const rangeToInt = {
 export {
 	groupBy,
 	nameSort,
+	pluralize,
 	rangeToInt,
 	sizeToInt,
 	sortBy,

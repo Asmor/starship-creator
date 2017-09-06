@@ -19,6 +19,13 @@ let config = {
 				aft: [],
 				turret: [],
 			},
+			weaponLinks: {
+				front: false,
+				port: false,
+				starboard: false,
+				aft: false,
+				turret: false,
+			},
 		},
 	},
 	actions: {},
@@ -132,8 +139,7 @@ config.mutations[ADD_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 };
 
 config.mutations[LINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
-	// state.currentShip.weapons[arc].push(weapon);
-	console.warn("LINK_WEAPON_MUTATION not yet implemented");
+	state.currentShip.weaponLinks[arc] = weapon;
 };
 
 config.mutations[REMOVE_WEAPON_MUTATION] = (state, {weapon, arc}) => {

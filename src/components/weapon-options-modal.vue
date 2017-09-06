@@ -32,16 +32,31 @@ export default {
 		});
 	},
 	methods: {
+		canLink() {
+			if ( !this.arc ) {
+				return false;
+			}
+
+			let weapons = this.$store.state.currentShip.weapons[this.arc];
+			let matchingWeapons = weapons.reduce((sum, weapon) => {
+				if ( weapon.name === this.weapon.name ) {
+					sum++;
+				}
+
+				return sum;
+			}, 0);
+
+			console.log("Sum:", matchingWeapons);
+
+			return matchingWeapons >= 2;
+		},
 		linkWeapon() {
-			console.warn("TO DO: IMPLEMENT REMOVE AND LINK!");
-			return;
 			this.$store.dispatch(LINK_WEAPON, { weapon: this.weapon, arc: this.arc });
 			this.$refs[this.modalId].hide();
 		},
 		removeWeapon() {
 			this.$store.dispatch(REMOVE_WEAPON, { weapon: this.weapon, arc: this.arc });
 			this.$refs[this.modalId].hide();
-			return;
 		},
 	},
 	components: {},
@@ -60,7 +75,8 @@ export default {
 				<b-button
 					variant="primary"
 					@click="linkWeapon()"
-				>Link</b-button>
+					:disabled="!canLink()"
+				>Link</b-button> Cost: {{ Math.floor(weapon.cost / 2) }}
 				(requires two identical weapons)
 			</div>
 			<div class="weapon-options-modal--button">
