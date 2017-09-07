@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import {
+	pluralize,
 	sizeToInt,
 	weaponClassToInt,
 } from "./util.js";
@@ -21,13 +22,6 @@ let config = {
 				starboard: [],
 				aft: [],
 				turret: [],
-			},
-			weaponLinks: {
-				forward: false,
-				port: false,
-				starboard: false,
-				aft: false,
-				turret: false,
 			},
 		},
 	},
@@ -147,6 +141,29 @@ config.mutations[SET_POWER_CORE_MUTATION] = (state, powerCore) => {
 	}
 };
 
+let linkedWeapons = {};
+function makeLinked(weapon) {
+	let linked = linkedWeapons[weapon.name];
+
+	if ( !linked ) {
+		linked = {
+			original: weapon,
+			linked: true,
+			name: "Linked twin " + pluralize(weapon.name).toLowerCase(),
+			class: weapon.class,
+			type: weapon.type,
+			range: weapon.range,
+			speed: weapon.speed,
+			damage: weapon.damage + " (each)",
+			pcu: weapon.pcu * 2,
+			cost: Math.floor(weapon.cost * 2.5),
+			specialProperties: weapon.specialProperties,
+		};
+	}
+
+	return linked;
+}
+
 [
 	{ action: ADD_WEAPON,    mutation: ADD_WEAPON_MUTATION },
 	{ action: LINK_WEAPON,   mutation: LINK_WEAPON_MUTATION },
@@ -163,12 +180,16 @@ config.mutations[ADD_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 };
 
 config.mutations[LINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
-	state.currentShip.weaponLinks[arc] = weapon;
+	// Remove two copies of the weapon...
+	config.mutations[REMOVE_WEAPON_MUTATION](state, { weapon, arc });
+	config.mutations[REMOVE_WEAPON_MUTATION](state, { weapon, arc });
+
+	// And add the linked weapon
+	config.mutations[ADD_WEAPON_MUTATION](state, { weapon: makeLinked(weapon), arc });
 };
 
 config.mutations[REMOVE_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 	let weapons = state.currentShip.weapons[arc];
-	let linked = (state.currentShip.weaponLinks[arc] && state.currentShip.weaponLinks[arc].name === weapon.name);
 	let deleteIndex = -1;
 	let matchingCount = 0;
 
@@ -181,22 +202,23 @@ config.mutations[REMOVE_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 
 	if ( deleteIndex >= 0 ) {
 		weapons.splice(deleteIndex, 1);
-
-		if ( linked  && matchingCount <= 2 ) {
-			// We no longer have enough of these, so unlink them!
-			config.mutations[UNLINK_WEAPON_MUTATION](state, { weapon, arc });
-		}
 	} else {
 		console.warn("Couldn't find", shipWeapon, "in arc:", arc);
 	}
 };
 
 config.mutations[UNLINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
-	if ( state.currentShip.weaponLinks[arc].name === weapon.name ) {
-		state.currentShip.weaponLinks[arc] = false;
-	} else {
-		console.warn("Not linked; tried to unlink", weapon, "from arc:", arc);
+	if ( !weapon.linked ) {
+		console.warn("Tried to unlink a weapon that wasn't linked:", weapon);
+		return;
 	}
+
+	// Remove the linked weapon
+	config.mutations[REMOVE_WEAPON_MUTATION](state, { weapon, arc });
+
+	// Add two copies of original weapon back to ship
+	config.mutations[ADD_WEAPON_MUTATION](state, { weapon: weapon.original, arc });
+	config.mutations[ADD_WEAPON_MUTATION](state, { weapon: weapon.original, arc });
 };
 
 const store = new Vuex.Store(config);

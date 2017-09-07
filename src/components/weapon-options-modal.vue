@@ -28,6 +28,7 @@ export default {
 			opener: (args) => {
 				this.arc = args.arc;
 				this.weapon = args.weapon;
+				console.log(args.weapon);
 				this.$refs[this.modalId].show();
 			},
 		});
@@ -48,10 +49,6 @@ export default {
 			}, 0);
 
 			return matchingWeapons >= 2;
-		},
-		isLinked(weapon) {
-			var linked = this.$store.state.currentShip.weaponLinks[this.arc];
-			return !!(linked && linked.name === weapon.name);
 		},
 		linkWeapon() {
 			this.$store.dispatch(LINK_WEAPON, { weapon: this.weapon, arc: this.arc });
@@ -80,7 +77,7 @@ export default {
 		>
 			<div
 				class="weapon-options-modal--button"
-				v-if="!isLinked(weapon)"
+				v-if="!weapon.linked"
 			>
 				<b-button
 					variant="primary"
@@ -92,7 +89,7 @@ export default {
 
 			<div
 				class="weapon-options-modal--button"
-				v-if="isLinked(weapon)"
+				v-if="weapon.linked"
 			>
 				<b-button
 					variant="primary"

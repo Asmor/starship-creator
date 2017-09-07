@@ -7,7 +7,6 @@ import {
 	groupBy,
 	mountIntsToText,
 	nameSort,
-	pluralize,
 	weaponClassToInt,
 	weaponClassToMountInt,
 	rangeToInt,
@@ -39,21 +38,6 @@ const weaponSort = (a, b) => {
 };
 
 let modalCounter = 0;
-
-function makeLinked(weapon) {
-	return {
-		original: weapon,
-		name: "Linked Twin " + pluralize(weapon.name),
-		class: weapon.class,
-		type: weapon.type,
-		range: weapon.range,
-		speed: weapon.speed,
-		damage: weapon.damage + " (each)",
-		pcu: weapon.pcu * 2,
-		cost: Math.floor(weapon.cost * 2.5),
-		specialProperties: weapon.specialProperties,
-	};
-}
 
 function tallyMounts(mounts) {
 	let total = 0;
@@ -88,28 +72,7 @@ export default {
 	computed: {
 		selectedWeapons: function () {
 			// Sort modifies the original array, so we need to slice to get a new array to sort
-			let weapons = [];
-			let linkedWeapon = this.$store.state.currentShip.weaponLinks[this.arc];
-			let linkedCount = 0;
-
-			this.$store.state.currentShip.weapons[this.arc].slice().sort(nameSort).forEach(function (weapon) {
-				if ( weapon.name === linkedWeapon.name ) {
-					if ( linkedCount === 0 ) {
-						weapons.push(makeLinked(weapon))
-					} else if ( linkedCount === 1 ) {
-						// This is the second one, ignore it
-					} else {
-						// We've already got both linked weapons, so push any more
-						weapons.push(weapon);
-					}
-
-					linkedCount++;
-				} else {
-					weapons.push(weapon);
-				}
-			});
-
-			return weapons;
+			return this.$store.state.currentShip.weapons[this.arc].slice().sort(nameSort);
 		},
 		selectedFrame: function () {
 			return this.$store.state.currentShip.frame;
@@ -117,8 +80,15 @@ export default {
 	},
 	methods: {
 		canAdd() {
-			let currentWeaponCount = this.$store.state.currentShip.weapons[this.arc].length;
 			let maxWeaponCount = this.getMaxWeapons();
+			let currentWeaponCount = this.selectedWeapons.length;
+
+			this.selectedWeapons.forEach(weapon => {
+				// Linked weapons are actually taking up two slots
+				if ( weapon.linked ) {
+					currentWeaponCount++;
+				}
+			});
 
 			return currentWeaponCount < maxWeaponCount;
 		},
@@ -209,11 +179,6 @@ export default {
 			return mounts;
 		},
 		showWeaponOptionsModal(weapon) {
-			// Linked weapons are a modified version which have the original as a special property
-			if ( weapon.original ) {
-				weapon = weapon.original;
-			}
-
 			openModal({
 				modalId: WEAPON_OPTIONS_MODAL,
 				args: { arc: this.arc, weapon },
