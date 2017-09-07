@@ -204,46 +204,51 @@ export default {
 			<select-frame></select-frame>
 		</div>
 
-		<ship-component-section v-if="frameSelected" title="Core systems">
-			<ship-component-repeater :components="coreComponents"></ship-component-repeater>
-		</ship-component-section>
+		<div
+			class="app--ship-components"
+			v-if="frameSelected"
+		>
+			<ship-component-section title="Core systems">
+				<ship-component-repeater :components="coreComponents"></ship-component-repeater>
+			</ship-component-section>
 
-		<ship-component-section v-if="frameSelected" title="Defenses">
-			<ship-component-repeater :components="defensiveComponents"></ship-component-repeater>
-		</ship-component-section>
+			<ship-component-section title="Defenses">
+				<ship-component-repeater :components="defensiveComponents"></ship-component-repeater>
+			</ship-component-section>
 
-		<ship-component-section v-if="frameSelected"title="Weapons">
-			<div class="app--flex-layout">
-				<div class="app--flex-item">
-					<weapon-group arc="forward" title="Forward arc"></weapon-group>
+			<ship-component-section title="Weapons">
+				<div class="app--flex-layout">
+					<div class="app--flex-item">
+						<weapon-group arc="forward" title="Forward arc"></weapon-group>
+					</div>
+					<div class="app--flex-item">
+						<weapon-group arc="port" title="Port arc"></weapon-group>
+					</div>
+					<div class="app--flex-item">
+						<weapon-group arc="starboard" title="Starboard arc"></weapon-group>
+					</div>
+					<div class="app--flex-item">
+						<weapon-group arc="aft" title="Aft arc"></weapon-group>
+					</div>
+					<div class="app--flex-item">
+						<weapon-group arc="turret" title="Turret"></weapon-group>
+					</div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
 				</div>
-				<div class="app--flex-item">
-					<weapon-group arc="port" title="Port arc"></weapon-group>
-				</div>
-				<div class="app--flex-item">
-					<weapon-group arc="starboard" title="Starboard arc"></weapon-group>
-				</div>
-				<div class="app--flex-item">
-					<weapon-group arc="aft" title="Aft arc"></weapon-group>
-				</div>
-				<div class="app--flex-item">
-					<weapon-group arc="turret" title="Turret"></weapon-group>
-				</div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-				<div class="app--flex-item app--flex-item__placeholder"></div>
-			</div>
-		</ship-component-section>
+			</ship-component-section>
 
-		<weapon-select-modal></weapon-select-modal>
-		<weapon-options-modal></weapon-options-modal>
+			<weapon-select-modal></weapon-select-modal>
+			<weapon-options-modal></weapon-options-modal>
+		</div>
 	</div>
 </template>
 
