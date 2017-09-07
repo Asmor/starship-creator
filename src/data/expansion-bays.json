@@ -1,0 +1,22 @@
+[
+	{"name": "Arcane laboratory", "minSize": "Tiny", "bays": 1, "pcu": 1, "cost": 1 },
+	{"name": "Cargo hold", "minSize": "Tiny", "bays": 1, "pcu": 0, "cost": 0 },
+	{"name": "Escape pods", "minSize": "Tiny", "bays": 1, "pcu": 2, "cost": 1 },
+	{"name": "Guest quarters", "minSize": "Tiny", "bays": 1, "pcu": 1, "cost": 1 },
+	{"name": "Hangar bay", "minSize": "Gargantuan", "bays": 4, "pcu": 30, "cost": 10 },
+	{"name": "Life boats", "minSize": "Tiny", "bays": 1, "pcu": 5, "cost": 3 },
+	{"name": "Medical bay", "minSize": "Tiny", "bays": 1, "pcu": 4, "cost": 8 },
+	{"name": "Passenger seating", "minSize": "Tiny", "bays": 1, "pcu": 0, "cost": 0 },
+	{"name": "Power core housing", "minSize": "Medium", "bays": 1, "pcu": 0, "cost": 10 },
+	{"name": "Recreation suite (gym)", "minSize": "Tiny", "bays": 1, "pcu": 0, "cost": 1 },
+	{"name": "Recreation suite (trivid den)", "minSize": "Tiny", "bays": 1, "pcu": 1, "cost": 1 },
+	{"name": "Recreation suite (HAC)", "minSize": "Tiny", "bays": 1, "pcu": 3, "cost": 1 },
+	{"name": "Science lab (general)", "minSize": "Tiny", "bays": 1, "pcu": 2, "cost": 1 },
+	{"name": "Science lab (life science)", "minSize": "Tiny", "bays": 1, "pcu": 2, "cost": 1 },
+	{"name": "Science lab (physical science)", "minSize": "Tiny", "bays": 1, "pcu": 2, "cost": 1 },
+	{"name": "Sealed environment chamber", "minSize": "Tiny", "bays": 1, "pcu": 2, "cost": 1 },
+	{"name": "Shuttle bay", "minSize": "Huge", "bays": 2, "pcu": 10, "cost": 4 },
+	{"name": "Smuggler compartment", "minSize": "Tiny", "bays": 1, "pcu": 4, "cost": 2 },
+	{"name": "Synthesis bay", "minSize": "Tiny", "bays": 1, "pcu": 2, "cost": 1 },
+	{"name": "Tech workshop", "minSize": "Tiny", "bays": 1, "pcu": 3, "cost": 1 }
+]
