@@ -91,7 +91,23 @@ const rangeToInt = {
 	Long: 20,
 };
 
+const expansionBayCalculations = {
+	maxSlots: function () {
+		return this.$store.state.currentShip.frame.expansionBays;
+	},
+	remainingSlots: function () {
+		return this.maxSlots - this.usedSlots;
+	},
+	selectedExpansionBays: function () {
+		return this.$store.state.currentShip.expansionBays;
+	},
+	usedSlots: function () {
+		return this.selectedExpansionBays.reduce((sum, bay) => { return sum + bay.bays; }, 0);
+	},
+};
+
 export {
+	expansionBayCalculations,
 	groupBy,
 	mountIntsToText,
 	nameSort,

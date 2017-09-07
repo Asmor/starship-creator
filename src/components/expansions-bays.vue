@@ -1,6 +1,8 @@
 <script>
 import { store } from "../store.js";
 
+import { expansionBayCalculations } from "../util.js";
+
 import {
 	openModal,
 	EXPANSION_BAY_OPTIONS_MODAL,
@@ -16,18 +18,10 @@ export default {
 		return {};
 	},
 	computed: {
-		maxSlots: function () {
-			return this.$store.state.currentShip.frame.expansionBays;
-		},
-		remainingSlots: function () {
-			return this.maxSlots - this.usedSlots;
-		},
-		selectedExpansionBays: function () {
-			return this.$store.state.currentShip.expansionBays;
-		},
-		usedSlots: function () {
-			return this.selectedExpansionBays.reduce((sum, bay) => { return sum + bay.bays; }, 0);
-		},
+		maxSlots: expansionBayCalculations.maxSlots,
+		remainingSlots: expansionBayCalculations.remainingSlots,
+		selectedExpansionBays: expansionBayCalculations.selectedExpansionBays,
+		usedSlots: expansionBayCalculations.usedSlots,
 	},
 	methods: {
 		getExpansionBayText(expansionBay) {

@@ -5,7 +5,9 @@ import {
 } from "../store.js";
 import expansionBays from "../data/expansion-bays.json";
 import {
+	expansionBayCalculations,
 	nameSort,
+	sizeToInt,
 } from "../util.js";
 
 import {
@@ -22,7 +24,12 @@ export default {
 			modalId: "expansion-bay-select-modal",
 		};
 	},
-	computed: {},
+	computed: {
+		maxSlots: expansionBayCalculations.maxSlots,
+		remainingSlots: expansionBayCalculations.remainingSlots,
+		selectedExpansionBays: expansionBayCalculations.selectedExpansionBays,
+		usedSlots: expansionBayCalculations.usedSlots,
+	},
 	mounted: function () {
 		registerModal({
 			modalId: EXPANSION_BAY_SELECT_MODAL,
@@ -39,8 +46,15 @@ export default {
 			}
 		},
 		expansionBayAllowed(expansionBay) {
-			// TODO: Check that we have enough slots for the expansion bay and the ship's frame is
-			// big enough to allow it
+			if ( this.remainingSlots < expansionBay.bays ) {
+				return false;
+			}
+
+			let shipSizeInt = sizeToInt[this.$store.state.currentShip.frame.size];
+			if ( sizeToInt[expansionBay.minSize] > shipSizeInt ) {
+				return false;
+			}
+
 			return true;
 		},
 	},
