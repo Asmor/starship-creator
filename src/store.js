@@ -246,7 +246,7 @@ config.mutations[REMOVE_EXPANSION_BAY_MUTATION] = (state, expansionBay) => {
 	let deleteIndex = -1;
 
 	let found = expansionBays.forEach((shipExpansionBay, index) => {
-		if ( shipExpansionBay.name === shipExpansionBay.name ) {
+		if ( shipExpansionBay.name === expansionBay.name ) {
 			deleteIndex = index;
 		}
 	});
