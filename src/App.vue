@@ -22,10 +22,14 @@ import shields from "./data/shields.json";
 import sensors from "./data/sensors.json";
 import thrusters from "./data/thrusters.json";
 
+import expansionBays from "./components/expansions-bays.vue";
 import selectFrame from "./components/select-frame.vue";
 import shipComponentSection from "./components/ship-component-section.vue";
 import shipComponentRepeater from "./components/ship-component-repeater.vue";
 import weaponGroup from "./components/weapon-group.vue";
+
+import expansionBayOptionsModal from "./components/expansion-bay-options-modal.vue";
+import expansionBaySelectModal from "./components/expansion-bay-select-modal.vue";
 import weaponOptionsModal from "./components/weapon-options-modal.vue";
 import weaponSelectModal from "./components/weapon-select-modal.vue";
 
@@ -184,10 +188,14 @@ export default {
 		},
 	},
 	components: {
+		expansionBays,
 		selectFrame,
 		shipComponentRepeater,
 		shipComponentSection,
 		weaponGroup,
+
+		expansionBayOptionsModal,
+		expansionBaySelectModal,
 		weaponOptionsModal,
 		weaponSelectModal,
 	}
@@ -208,6 +216,28 @@ export default {
 			class="app--ship-components"
 			v-if="frameSelected"
 		>
+			<ship-component-section title="Other">
+				<div class="app--flex-layout">
+					<div class="app--flex-item">
+						TODO Move this section to bottom
+					</div>
+					<div class="app--flex-item">
+						<expansion-bays></expansion-bays>
+					</div>
+
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+				</div>
+			</ship-component-section>
+
 			<ship-component-section title="Core systems">
 				<ship-component-repeater :components="coreComponents"></ship-component-repeater>
 			</ship-component-section>
@@ -246,6 +276,8 @@ export default {
 				</div>
 			</ship-component-section>
 
+			<expansion-bay-options-modal></expansion-bay-options-modal>
+			<expansion-bay-select-modal></expansion-bay-select-modal>
 			<weapon-select-modal></weapon-select-modal>
 			<weapon-options-modal></weapon-options-modal>
 		</div>

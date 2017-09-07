@@ -28,7 +28,6 @@ export default {
 			opener: (args) => {
 				this.arc = args.arc;
 				this.weapon = args.weapon;
-				console.log(args.weapon);
 				this.$refs[this.modalId].show();
 			},
 		});

@@ -43,6 +43,9 @@ export default {
 
 			return parts.join("; ");
 		},
+		showExpansionBayOptionsModal(expansionBay) {
+			openModal({ modalId: EXPANSION_BAY_OPTIONS_MODAL, args: { expansionBay } });
+		},
 		showExpansionBaySelectModal() {
 			openModal({ modalId: EXPANSION_BAY_SELECT_MODAL });
 		},
@@ -64,8 +67,8 @@ export default {
 			<div
 				class="expansion-bays--expansionBay"
 				v-for="expansionBay in selectedExpansionBays"
+				@click="showExpansionBayOptionsModal(expansionBay)"
 			>
-				<!-- @click="showexpansionBayOptionsModal(expansionBay)" -->
 				<span class="expansion-bays--expansion-bay-title">{{ expansionBay.name }}</span>
 				<span class="expansion-bays--expansion-bay-description">{{ getExpansionBayText(expansionBay) }}</span>
 			</div>

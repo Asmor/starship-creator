@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import {
+	nameSort,
 	pluralize,
 	sizeToInt,
 	weaponClassToInt,
@@ -23,6 +24,7 @@ let config = {
 				aft: [],
 				turret: [],
 			},
+			expansionBays: [],
 		},
 	},
 	actions: {},
@@ -38,6 +40,12 @@ const REMOVE_WEAPON = "REMOVE_WEAPON";
 const REMOVE_WEAPON_MUTATION = "REMOVE_WEAPON_MUTATION";
 const UNLINK_WEAPON = "UNLINK_WEAPON";
 const UNLINK_WEAPON_MUTATION = "UNLINK_WEAPON_MUTATION";
+
+const ADD_EXPANSION_BAY = "ADD_EXPANSION_BAY";
+const ADD_EXPANSION_BAY_MUTATION = "ADD_EXPANSION_BAY_MUTATION";
+const REMOVE_EXPANSION_BAY = "REMOVE_EXPANSION_BAY";
+const REMOVE_EXPANSION_BAY_MUTATION = "REMOVE_EXPANSION_BAY_MUTATION";
+
 const SET_ARMOR = "SET_ARMOR";
 const SET_ARMOR_MUTATION = "SET_ARMOR_MUTATION";
 const SET_COMPUTER = "SET_COMPUTER";
@@ -191,12 +199,10 @@ config.mutations[LINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 config.mutations[REMOVE_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 	let weapons = state.currentShip.weapons[arc];
 	let deleteIndex = -1;
-	let matchingCount = 0;
 
 	let found = weapons.forEach((shipWeapon, index) => {
 		if ( shipWeapon.name === weapon.name ) {
 			deleteIndex = index;
-			matchingCount++;
 		}
 	});
 
@@ -221,14 +227,54 @@ config.mutations[UNLINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 	config.mutations[ADD_WEAPON_MUTATION](state, { weapon: weapon.original, arc });
 };
 
+[
+	{ action: ADD_EXPANSION_BAY,    mutation: ADD_EXPANSION_BAY_MUTATION },
+	{ action: REMOVE_EXPANSION_BAY, mutation: REMOVE_EXPANSION_BAY_MUTATION },
+].forEach(function (args) {
+	config.actions[args.action] = ({commit}, expansionBay) => {
+		commit(args.mutation, expansionBay);
+	};
+});
+
+config.mutations[ADD_EXPANSION_BAY_MUTATION] = (state, expansionBay) => {
+	state.currentShip.expansionBays.push(expansionBay);
+	state.currentShip.expansionBays.sort(nameSort);
+};
+
+config.mutations[REMOVE_EXPANSION_BAY_MUTATION] = (state, expansionBay) => {
+	let expansionBays = state.currentShip.expansionBays;
+	let deleteIndex = -1;
+
+	let found = expansionBays.forEach((shipExpansionBay, index) => {
+		if ( shipExpansionBay.name === shipExpansionBay.name ) {
+			deleteIndex = index;
+		}
+	});
+
+	if ( deleteIndex >= 0 ) {
+		expansionBays.splice(deleteIndex, 1);
+	} else {
+		console.warn("Couldn't find", shipExpansionBay);
+	}
+};
+
+
+
 const store = new Vuex.Store(config);
 
 export {
 	store,
+
 	ADD_WEAPON,
 	LINK_WEAPON,
 	REMOVE_WEAPON,
 	UNLINK_WEAPON,
+
+	ADD_EXPANSION_BAY,
+	ADD_EXPANSION_BAY_MUTATION,
+	REMOVE_EXPANSION_BAY,
+	REMOVE_EXPANSION_BAY_MUTATION,
+
 	SET_ARMOR,
 	SET_COMPUTER,
 	SET_DEFENSES,
