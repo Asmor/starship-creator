@@ -2,18 +2,18 @@
 import {
 	store,
 	ADD_EXPANSION_BAY,
-} from "../store.js";
-import expansionBays from "../data/expansion-bays.json";
+} from "../../store.js";
+import expansionBays from "../../data/expansion-bays.json";
 import {
 	expansionBayCalculations,
 	nameSort,
 	sizeToInt,
-} from "../util.js";
+} from "../../util.js";
 
 import {
 	registerModal, 
 	EXPANSION_BAY_SELECT_MODAL, 
-} from "../modal-handler.js";
+} from "../../modal-handler.js";
 
 export default {
 	name: "expansionBaySelectModal",

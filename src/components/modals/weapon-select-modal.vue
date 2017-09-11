@@ -2,20 +2,20 @@
 import {
 	store,
 	ADD_WEAPON,
-} from "../store.js";
-import weapons from "../data/weapons.json";
+} from "../../store.js";
+import weapons from "../../data/weapons.json";
 import {
 	groupBy,
 	nameSort,
 	weaponClassToInt,
 	rangeToInt,
 	sizeToInt,
-} from "../util.js";
+} from "../../util.js";
 
 import {
 	registerModal, 
 	WEAPON_SELECT_MODAL, 
-} from "../modal-handler.js";
+} from "../../modal-handler.js";
 
 const weaponSort = (a, b) => {
 	// Sort by Class, then by Type, then by Range, then by Name

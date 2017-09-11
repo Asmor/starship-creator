@@ -2,12 +2,12 @@
 import {
 	store,
 	REMOVE_EXPANSION_BAY,
-} from "../store.js";
+} from "../../store.js";
 
 import {
 	registerModal, 
 	EXPANSION_BAY_OPTIONS_MODAL,
-} from "../modal-handler.js";
+} from "../../modal-handler.js";
 
 export default {
 	name: "expansionBayOptionsModal",

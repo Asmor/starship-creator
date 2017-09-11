@@ -28,10 +28,10 @@ import shipComponentSection from "./components/ship-component-section.vue";
 import shipComponentRepeater from "./components/ship-component-repeater.vue";
 import weaponGroup from "./components/weapon-group.vue";
 
-import expansionBayOptionsModal from "./components/expansion-bay-options-modal.vue";
-import expansionBaySelectModal from "./components/expansion-bay-select-modal.vue";
-import weaponOptionsModal from "./components/weapon-options-modal.vue";
-import weaponSelectModal from "./components/weapon-select-modal.vue";
+import expansionBayOptionsModal from "./components/modals/expansion-bay-options-modal.vue";
+import expansionBaySelectModal from "./components/modals/expansion-bay-select-modal.vue";
+import weaponOptionsModal from "./components/modals/weapon-options-modal.vue";
+import weaponSelectModal from "./components/modals/weapon-select-modal.vue";
 
 let armorSection = {
 	columns: [

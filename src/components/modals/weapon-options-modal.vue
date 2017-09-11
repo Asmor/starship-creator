@@ -4,12 +4,12 @@ import {
 	LINK_WEAPON,
 	REMOVE_WEAPON,
 	UNLINK_WEAPON,
-} from "../store.js";
+} from "../../store.js";
 
 import {
 	registerModal, 
 	WEAPON_OPTIONS_MODAL,
-} from "../modal-handler.js";
+} from "../../modal-handler.js";
 
 export default {
 	name: "weaponOptionsModal",
