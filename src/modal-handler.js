@@ -9,7 +9,6 @@ const openModal = ({ modalId, args }) => {
 	let opener = registeredModals[modalId];
 
 	if ( opener ) {
-		console.log(args);
 		opener(args);
 	} else {
 		console.warn("No registered modal:", modalId, args);
