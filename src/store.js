@@ -267,23 +267,19 @@ config.mutations[ADD_POWER_CORE_MUTATION] = (state, powerCore) => {
 };
 
 config.mutations[REMOVE_POWER_CORE_MUTATION] = (state, powerCore) => {
-	console.log("ALPHA", powerCore);
 	let powerCores = state.currentShip.powerCores;
 	let deleteIndex = -1;
 
 	let found = powerCores.forEach((shipPowerCore, index) => {
-		console.log("BETA", shipPowerCore.name);
 		if ( shipPowerCore.name === powerCore.name ) {
 			deleteIndex = index;
 		}
 	});
 
-	console.log("GAMMA", powerCore.name);
 	if ( deleteIndex >= 0 ) {
 		powerCores.splice(deleteIndex, 1);
 
 		verifyDriftEngineMinPCU(state);
-		console.log("DELTA", powerCore.name);
 	} else {
 		console.warn("Couldn't find power core", powerCore);
 	}
