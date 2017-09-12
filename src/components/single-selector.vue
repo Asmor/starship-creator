@@ -96,7 +96,7 @@ export default {
 				return true;
 			}
 
-			return this.itemDisabled(this.$store.state.currentShip, item);
+			return !this.itemDisabled(this.$store.state.currentShip, item);
 		},
 	},
 	props: [

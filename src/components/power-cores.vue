@@ -22,7 +22,6 @@ export default {
 			this.$store.state.currentShip.expansionBays.forEach(expansionBay => {
 				if ( expansionBay.extraPowerCores ) {
 					total += expansionBay.extraPowerCores;
-					console.log("Got an extra core! Total: ", total);
 				}
 			});
 

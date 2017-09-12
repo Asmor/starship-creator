@@ -290,16 +290,45 @@ const verifyDriftEngineMinPCU = (state) => {
 	let ship = state.currentShip;
 
 	if ( ship.driftEngine ) {
-		let pcu = ship.powerCores.reduce((total, powerCore) => {
-			return total + powerCore.pcu;
-		}, 0);
-
+		let pcu = config.getters.availablePcu(state);
 		let minPcu = ship.driftEngine.minPcu;
 
 		if ( pcu < minPcu ) {
 			config.mutations[SET_DRIFT_ENGINE_MUTATION](state, false);
 		}
 	}
+};
+
+config.getters.availablePcu = state => {
+	return state.currentShip.powerCores.reduce((total, powerCore) => {
+		return total + powerCore.pcu;
+	}, 0);
+};
+
+config.getters.usedPcu = state => {
+	let pcu = 0;
+
+	let ship = state.currentShip;
+
+	ship.expansionBays.forEach(bay => pcu += bay.pcu);
+	Object.keys(ship.weapons).forEach(arc => {
+		ship.weapons[arc].forEach(weapon => pcu += weapon.pcu);
+	});
+
+	[
+		ship.computer,
+		ship.sensors,
+		ship.thrusters,
+		ship.armor,
+		ship.defenses,
+		ship.shields,
+	].forEach(item => {
+		if ( item && item.pcu ) {
+			pcu += item.pcu;
+		}
+	});
+
+	return pcu;
 };
 
 const store = new Vuex.Store(config);

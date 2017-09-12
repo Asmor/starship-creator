@@ -87,12 +87,9 @@ let driftEngineSection = {
 		{ name: "Cost",         key: "cost", multiplyBySize: true, addendum: "based on size", center: true },
 	],
 	itemDisabled: function (currentShip, driftEngine) {
-		let pcu = currentShip.powerCores.reduce((total, powerCore) => {
-			return total + powerCore.pcu;
-		}, 0);
-		let minPcu = driftEngine.minPcu;
+		let pcu = this.$store.getters.availablePcu;
 
-		return pcu >= minPcu;
+		return pcu < driftEngine.minPcu;
 	},
 	itemFilter: function (currentShip, driftEngine) {
 		let maxSize = sizeToInt[driftEngine.maxSize];
@@ -138,7 +135,7 @@ let thrustersSection = {
 		{ name: "Thrusters",    key: "name" },
 		{ name: "Speed",        key: "speed", center: true },
 		{ name: "Piloting Mod", key: "pilotingMod", center: true },
-		{ name: "PCU Cost",     key: "pcuCost", center: true },
+		{ name: "PCU",     key: "pcu", center: true },
 		{ name: "Cost",         key: "cost", center: true },
 	],
 	itemFilter: function (currentShip, thruster) {
@@ -171,6 +168,12 @@ export default {
 		}
 	},
 	computed: {
+		availablePcu: function () {
+			return this.$store.getters.availablePcu;
+		},
+		usedPcu: function () {
+			return this.$store.getters.usedPcu;
+		},
 		frameSelected: function () {
 			return this.$store.state.currentShip.frame;
 		},
@@ -198,6 +201,16 @@ export default {
 	<div id="app" class="app">
 		<b-navbar toggleable="md" type="dark" variant="dark" :sticky="true">
 			<b-navbar-brand href="#">TODO TITLE GOES HERE</b-navbar-brand>
+			<b-nav-text>
+				<span
+					class="app--pcu-usage"
+					:class="{
+						'app--pcu-usage__error': usedPcu > availablePcu
+					}"
+				>
+					PCU Usage: {{ usedPcu }} / {{ availablePcu }}
+				</span>
+			</b-nav-text>
 		</b-navbar>
 
 		<div class="app--section">
@@ -338,6 +351,10 @@ export default {
 		&.app--flex-item__placeholder {
 			padding: 0;
 		}
+	}
+
+	.app--pcu-usage__error {
+		color: red;
 	}
 }
 </style>
