@@ -174,7 +174,14 @@ export default {
 		getUsedMounts() {
 			let weapons = this.$store.state.currentShip.weapons[this.arc];
 			let mounts = [];
-			weapons.forEach(weapon => mounts.push(weaponClassToMountInt[weapon.class]));
+			weapons.forEach(weapon => {
+				mounts.push(weaponClassToMountInt[weapon.class]);
+
+				// Linked weapons take up two slots
+				if ( weapon.linked ) {
+					mounts.push(weaponClassToMountInt[weapon.class]);
+				}
+			});
 			return mounts;
 		},
 		showWeaponOptionsModal(weapon) {
