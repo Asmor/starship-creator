@@ -17,19 +17,22 @@ import armors from "./data/armors.json";
 import computers from "./data/computers.json";
 import defenses from "./data/defensive-countermeasures.json";
 import driftEngines from "./data/drift-engines.json";
-import powerCores from "./data/power-cores.json";
 import shields from "./data/shields.json";
 import sensors from "./data/sensors.json";
 import thrusters from "./data/thrusters.json";
 
 import expansionBays from "./components/expansions-bays.vue";
+import powerCores from "./components/power-cores.vue";
 import selectFrame from "./components/select-frame.vue";
 import shipComponentSection from "./components/ship-component-section.vue";
 import shipComponentRepeater from "./components/ship-component-repeater.vue";
+import singleSelector from "./components/single-selector.vue";
 import weaponGroup from "./components/weapon-group.vue";
 
 import expansionBayOptionsModal from "./components/modals/expansion-bay-options-modal.vue";
 import expansionBaySelectModal from "./components/modals/expansion-bay-select-modal.vue";
+import powerCoreOptionsModal from "./components/modals/power-core-options-modal.vue";
+import powerCoreSelectModal from "./components/modals/power-core-select-modal.vue";
 import weaponOptionsModal from "./components/modals/weapon-options-modal.vue";
 import weaponSelectModal from "./components/modals/weapon-select-modal.vue";
 
@@ -84,7 +87,9 @@ let driftEngineSection = {
 		{ name: "Cost",         key: "cost", multiplyBySize: true, addendum: "based on size", center: true },
 	],
 	itemDisabled: function (currentShip, driftEngine) {
-		let pcu = currentShip.powerCore.pcu || 0;
+		let pcu = currentShip.powerCores.reduce((total, powerCore) => {
+			return total + powerCore.pcu;
+		}, 0);
 		let minPcu = driftEngine.minPcu;
 
 		return pcu >= minPcu;
@@ -100,22 +105,6 @@ let driftEngineSection = {
 	selectAction: SET_DRIFT_ENGINE,
 	shipComponentKey: "driftEngine",
 	title: "Drift Engine",
-};
-let powerCoreSection = {
-	columns: [
-		{ name: "Power core", key: "name" },
-		{ name: "PCU",        key: "pcu", center: true },
-		{ name: "Cost",       key: "cost", center: true },
-	],
-	itemFilter: function (currentShip, powerCore) {
-		let size = currentShip.frame.size;
-		return powerCore.sizes[size];
-	},
-	items: powerCores,
-	selectTitle: "Select a power core",
-	selectAction: SET_POWER_CORE,
-	shipComponentKey: "powerCore",
-	title: "Power Core",
 };
 let sensorsSection = {
 	columns: [
@@ -169,7 +158,6 @@ export default {
 	data () {
 		return {
 			coreComponents: [
-				powerCoreSection,
 				computerSection,
 				sensorsSection,
 				thrustersSection,
@@ -189,13 +177,17 @@ export default {
 	},
 	components: {
 		expansionBays,
+		powerCores,
 		selectFrame,
-		shipComponentRepeater,
 		shipComponentSection,
+		shipComponentRepeater,
+		singleSelector,
 		weaponGroup,
 
 		expansionBayOptionsModal,
 		expansionBaySelectModal,
+		powerCoreOptionsModal,
+		powerCoreSelectModal,
 		weaponOptionsModal,
 		weaponSelectModal,
 	}
@@ -239,7 +231,39 @@ export default {
 			</ship-component-section>
 
 			<ship-component-section title="Core systems">
-				<ship-component-repeater :components="coreComponents"></ship-component-repeater>
+				<div class="app--flex-layout">
+					<div class="app--flex-item">
+						<power-cores></power-cores>
+					</div>
+
+					<div
+						v-for="component in coreComponents"
+						class="app--flex-item"
+					>
+						<single-selector
+							:columns="component.columns"
+							:item-disabled="component.itemDisabled"
+							:item-filter="component.itemFilter"
+							:items="component.items"
+							:removeable="component.removeable"
+							:select-action="component.selectAction"
+							:select-title="component.selectTitle"
+							:ship-component-key="component.shipComponentKey"
+							:title="component.title"
+						></single-selector>
+					</div>
+
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+					<div class="app--flex-item app--flex-item__placeholder"></div>
+				</div>
 			</ship-component-section>
 
 			<ship-component-section title="Defenses">
@@ -278,6 +302,8 @@ export default {
 
 			<expansion-bay-options-modal></expansion-bay-options-modal>
 			<expansion-bay-select-modal></expansion-bay-select-modal>
+			<power-core-options-modal></power-core-options-modal>
+			<power-core-select-modal></power-core-select-modal>
 			<weapon-select-modal></weapon-select-modal>
 			<weapon-options-modal></weapon-options-modal>
 		</div>

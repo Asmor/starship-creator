@@ -25,6 +25,7 @@ let config = {
 				turret: [],
 			},
 			expansionBays: [],
+			powerCores: [],
 		},
 	},
 	actions: {},
@@ -41,6 +42,11 @@ const REMOVE_WEAPON_MUTATION = "REMOVE_WEAPON_MUTATION";
 const UNLINK_WEAPON = "UNLINK_WEAPON";
 const UNLINK_WEAPON_MUTATION = "UNLINK_WEAPON_MUTATION";
 
+const ADD_POWER_CORE = "ADD_POWER_CORE";
+const ADD_POWER_CORE_MUTATION = "ADD_POWER_CORE_MUTATION";
+const REMOVE_POWER_CORE = "REMOVE_POWER_CORE";
+const REMOVE_POWER_CORE_MUTATION = "REMOVE_POWER_CORE_MUTATION";
+
 const ADD_EXPANSION_BAY = "ADD_EXPANSION_BAY";
 const ADD_EXPANSION_BAY_MUTATION = "ADD_EXPANSION_BAY_MUTATION";
 const REMOVE_EXPANSION_BAY = "REMOVE_EXPANSION_BAY";
@@ -56,8 +62,6 @@ const SET_DRIFT_ENGINE = "SET_DRIFT_ENGINE";
 const SET_DRIFT_ENGINE_MUTATION = "SET_DRIFT_ENGINE_MUTATION";
 const SET_FRAME = "SET_FRAME";
 const SET_FRAME_MUTATION = "SET_FRAME_MUTATION";
-const SET_POWER_CORE = "SET_POWER_CORE";
-const SET_POWER_CORE_MUTATION = "SET_POWER_CORE_MUTATION";
 const SET_SENSORS = "SET_SENSORS";
 const SET_SENSORS_MUTATION = "SET_SENSORS_MUTATION";
 const SET_SHIELDS = "SET_SHIELDS";
@@ -73,7 +77,7 @@ const SET_THRUSTERS_MUTATION = "SET_THRUSTERS_MUTATION";
 	{ action: SET_DEFENSES,     mutation: SET_DEFENSES_MUTATION,     shipComponent: "defenses" },
 	{ action: SET_DRIFT_ENGINE, mutation: SET_DRIFT_ENGINE_MUTATION, shipComponent: "driftEngine" },
 	{ action: SET_FRAME,        mutation: SET_FRAME_MUTATION,        shipComponent: "frame" },
-	{ action: SET_POWER_CORE,   mutation: SET_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
+	{ action: ADD_POWER_CORE,   mutation: ADD_POWER_CORE_MUTATION,   shipComponent: "powerCore" },
 	{ action: SET_SENSORS,      mutation: SET_SENSORS_MUTATION,      shipComponent: "sensors" },
 	{ action: SET_SHIELDS,      mutation: SET_SHIELDS_MUTATION,      shipComponent: "shields" },
 	{ action: SET_THRUSTERS,    mutation: SET_THRUSTERS_MUTATION,    shipComponent: "thrusters" },
@@ -97,10 +101,19 @@ config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 
 	// Many components are only valid for particular ship sizes, so when we change frame size we
 	// need to check that the components are valid. If they're not, switch to the first one that is.
-	var powerCoreValid = ship.powerCore && ship.powerCore.sizes[frame.size];
-	if ( !powerCoreValid ) {
-		config.mutations[SET_POWER_CORE_MUTATION](state, false);
-	}
+	ship.powerCores
+	.reduce((toRemove, powerCore) => {
+		let powerCoreValid = powerCore && powerCore.sizes[frame.size];
+
+		if ( !powerCoreValid ) {
+			toRemove.push(powerCore);
+		}
+
+		return toRemove;
+	}, [])
+	.forEach(powerCoreToRemove => {
+		config.mutations[REMOVE_POWER_CORE_MUTATION](state, powerCoreToRemove)
+	});
 
 	var thrustersValid = ship.thrusters && (ship.thrusters.size === frame.size);
 	if ( !thrustersValid ) {
@@ -132,21 +145,6 @@ config.mutations[SET_FRAME_MUTATION] = (state, frame) => {
 
 		weaponsToRemove.forEach(weapon => config.mutations[REMOVE_WEAPON_MUTATION](state, { arc, weapon }));
 	});
-};
-
-config.mutations[SET_POWER_CORE_MUTATION] = (state, powerCore) => {
-	let ship = state.currentShip;
-	ship.powerCore = powerCore;
-
-	// Drift engines have a minimum PCU requirement
-	if ( ship.driftEngine ) {
-		let minPcu = ship.driftEngine.minPcu;
-		let pcu = powerCore.pcu || 0;
-
-		if ( pcu < minPcu ) {
-			config.mutations[SET_DRIFT_ENGINE_MUTATION](state, false);
-		}
-	}
 };
 
 let linkedWeapons = {};
@@ -231,6 +229,8 @@ config.mutations[UNLINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 [
 	{ action: ADD_EXPANSION_BAY,    mutation: ADD_EXPANSION_BAY_MUTATION },
 	{ action: REMOVE_EXPANSION_BAY, mutation: REMOVE_EXPANSION_BAY_MUTATION },
+	{ action: ADD_POWER_CORE,    mutation: ADD_POWER_CORE_MUTATION },
+	{ action: REMOVE_POWER_CORE, mutation: REMOVE_POWER_CORE_MUTATION },
 ].forEach(function (args) {
 	config.actions[args.action] = ({commit}, expansionBay) => {
 		commit(args.mutation, expansionBay);
@@ -255,11 +255,56 @@ config.mutations[REMOVE_EXPANSION_BAY_MUTATION] = (state, expansionBay) => {
 	if ( deleteIndex >= 0 ) {
 		expansionBays.splice(deleteIndex, 1);
 	} else {
-		console.warn("Couldn't find", shipExpansionBay);
+		console.warn("Couldn't find", expansionBay);
 	}
 };
 
+config.mutations[ADD_POWER_CORE_MUTATION] = (state, powerCore) => {
+	state.currentShip.powerCores.push(powerCore);
+	state.currentShip.powerCores.sort(nameSort);
 
+	verifyDriftEngineMinPCU(state);
+};
+
+config.mutations[REMOVE_POWER_CORE_MUTATION] = (state, powerCore) => {
+	console.log("ALPHA", powerCore);
+	let powerCores = state.currentShip.powerCores;
+	let deleteIndex = -1;
+
+	let found = powerCores.forEach((shipPowerCore, index) => {
+		console.log("BETA", shipPowerCore.name);
+		if ( shipPowerCore.name === powerCore.name ) {
+			deleteIndex = index;
+		}
+	});
+
+	console.log("GAMMA", powerCore.name);
+	if ( deleteIndex >= 0 ) {
+		powerCores.splice(deleteIndex, 1);
+
+		verifyDriftEngineMinPCU(state);
+		console.log("DELTA", powerCore.name);
+	} else {
+		console.warn("Couldn't find power core", powerCore);
+	}
+};
+
+const verifyDriftEngineMinPCU = (state) => {
+	// Drift engines have a minimum PCU requirement
+	let ship = state.currentShip;
+
+	if ( ship.driftEngine ) {
+		let pcu = ship.powerCores.reduce((total, powerCore) => {
+			return total + powerCore.pcu;
+		}, 0);
+
+		let minPcu = ship.driftEngine.minPcu;
+
+		if ( pcu < minPcu ) {
+			config.mutations[SET_DRIFT_ENGINE_MUTATION](state, false);
+		}
+	}
+};
 
 const store = new Vuex.Store(config);
 
@@ -272,16 +317,16 @@ export {
 	UNLINK_WEAPON,
 
 	ADD_EXPANSION_BAY,
-	ADD_EXPANSION_BAY_MUTATION,
 	REMOVE_EXPANSION_BAY,
-	REMOVE_EXPANSION_BAY_MUTATION,
+
+	ADD_POWER_CORE,
+	REMOVE_POWER_CORE,
 
 	SET_ARMOR,
 	SET_COMPUTER,
 	SET_DEFENSES,
 	SET_DRIFT_ENGINE,
 	SET_FRAME,
-	SET_POWER_CORE,
 	SET_SENSORS,
 	SET_SHIELDS,
 	SET_THRUSTERS,
