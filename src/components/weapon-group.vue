@@ -6,7 +6,6 @@ import {
 import {
 	groupBy,
 	mountIntsToText,
-	nameSort,
 	weaponClassToInt,
 	weaponClassToMountInt,
 	rangeToInt,
@@ -72,7 +71,7 @@ export default {
 	computed: {
 		selectedWeapons: function () {
 			// Sort modifies the original array, so we need to slice to get a new array to sort
-			return this.$store.state.currentShip.weapons[this.arc].slice().sort(nameSort);
+			return this.$store.state.currentShip.weapons[this.arc];
 		},
 		selectedFrame: function () {
 			return this.$store.state.currentShip.frame;

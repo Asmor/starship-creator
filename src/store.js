@@ -185,6 +185,7 @@ function makeLinked(weapon) {
 
 config.mutations[ADD_WEAPON_MUTATION] = (state, {weapon, arc}) => {
 	state.currentShip.weapons[arc].push(weapon);
+	state.currentShip.weapons[arc].sort(nameSort);
 };
 
 config.mutations[LINK_WEAPON_MUTATION] = (state, {weapon, arc}) => {
