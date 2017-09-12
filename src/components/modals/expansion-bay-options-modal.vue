@@ -30,7 +30,7 @@ export default {
 	},
 	methods: {
 		removeExpansionBay() {
-			this.$store.dispatch(REMOVE_EXPANSION_BAY, { expansionBay: this.expansionBay });
+			this.$store.dispatch(REMOVE_EXPANSION_BAY, this.expansionBay );
 			this.$refs[this.modalId].hide();
 		},
 	},
