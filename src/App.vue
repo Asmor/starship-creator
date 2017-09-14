@@ -369,4 +369,12 @@ export default {
 		margin: 0 10px;
 	}
 }
+
+.btn {
+	cursor: pointer;
+
+	&.disabled {
+		cursor: not-allowed;
+	}
+}
 </style>
