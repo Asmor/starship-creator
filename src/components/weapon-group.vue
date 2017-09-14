@@ -38,30 +38,6 @@ const weaponSort = (a, b) => {
 
 let modalCounter = 0;
 
-function tallyMounts(mounts) {
-	let total = 0;
-	let heavyOrBetter = 0;
-	let capital = 0;
-
-	mounts.forEach(mount => {
-		total++;
-
-		if ( mount >= 2 ) {
-			heavyOrBetter++;
-		}
-
-		if ( mount === 3 ) {
-			capital++;
-		}
-	});
-
-	return {
-		total,
-		heavyOrBetter,
-		capital,
-	};
-}
-
 export default {
 	name: "weaponGroup",
 	store,
@@ -92,15 +68,10 @@ export default {
 			return currentWeaponCount < maxWeaponCount;
 		},
 		costOfExtraMounts() {
-			let costs = this.getExtraMountCosts();
-			let extraMounts = this.getExtraMounts();
-
-			return (extraMounts.total * costs.newMount)
-				+ (extraMounts.heavyOrBetter * costs.heavy)
-				+ (extraMounts.capital * costs.capital);
+			return this.$store.getters.costOfExtraMounts(this.arc);
 		},
 		extraMountsText() {
-			let costs = this.getExtraMountCosts();
+			let costs = this.$store.getters.extraMountCosts(this.arc);
 			let extraMounts = this.getExtraMounts();
 			let text = [];
 
@@ -122,35 +93,7 @@ export default {
 			return text.join("; ");
 		},
 		getExtraMounts() {
-			var included = tallyMounts(this.getFrameMounts());
-			var used = tallyMounts(this.getUsedMounts());
-
-			let total = Math.max(0, used.total - included.total);
-			let heavyOrBetter = Math.max(0, used.heavyOrBetter - included.heavyOrBetter);
-			let capital = Math.max(0, used.capital - included.capital);
-
-			return {
-				total,
-				heavyOrBetter,
-				capital,
-			};
-		},
-		getExtraMountCosts() {
-			let costs = {
-				newMount: 3,
-				heavy: 4,
-				capital: 5,
-			};
-
-			if ( this.arc === "turret" ) {
-				costs = {
-					newMount: 5,
-					heavy: 6,
-					capital: 99999,
-				};
-			}
-
-			return costs;
+			return this.$store.getters.extraMounts(this.arc);
 		},
 		getFrameMounts() {
 			return this.$store.state.currentShip.frame.mounts[this.arc] || [];
@@ -172,17 +115,7 @@ export default {
 			return 4;
 		},
 		getUsedMounts() {
-			let weapons = this.$store.state.currentShip.weapons[this.arc];
-			let mounts = [];
-			weapons.forEach(weapon => {
-				mounts.push(weaponClassToMountInt[weapon.class]);
-
-				// Linked weapons take up two slots
-				if ( weapon.linked ) {
-					mounts.push(weaponClassToMountInt[weapon.class]);
-				}
-			});
-			return mounts;
+			return this.$store.getters.usedMounts(this.arc);
 		},
 		showWeaponOptionsModal(weapon) {
 			openModal({

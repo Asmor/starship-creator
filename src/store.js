@@ -6,6 +6,7 @@ import {
 	pluralize,
 	sizeToInt,
 	weaponClassToInt,
+	weaponClassToMountInt,
 } from "./util.js";
 
 import powerCores from "./data/power-cores.json";
@@ -285,7 +286,7 @@ config.mutations[REMOVE_POWER_CORE_MUTATION] = (state, powerCore) => {
 	}
 };
 
-const verifyDriftEngineMinPCU = (state) => {
+const verifyDriftEngineMinPCU = state => {
 	// Drift engines have a minimum PCU requirement
 	let ship = state.currentShip;
 
@@ -297,6 +298,30 @@ const verifyDriftEngineMinPCU = (state) => {
 			config.mutations[SET_DRIFT_ENGINE_MUTATION](state, false);
 		}
 	}
+};
+
+const tallyMounts = mounts => {
+	let total = 0;
+	let heavyOrBetter = 0;
+	let capital = 0;
+
+	mounts.forEach(mount => {
+		total++;
+
+		if ( mount >= 2 ) {
+			heavyOrBetter++;
+		}
+
+		if ( mount === 3 ) {
+			capital++;
+		}
+	});
+
+	return {
+		total,
+		heavyOrBetter,
+		capital,
+	};
 };
 
 config.getters.availablePcu = state => {
@@ -329,6 +354,77 @@ config.getters.usedPcu = state => {
 	});
 
 	return pcu;
+};
+
+config.getters.extraMounts = state => {
+	return arc => {
+		var included = tallyMounts(config.getters.frameMounts(state)(arc));
+		var used = tallyMounts(config.getters.usedMounts(state)(arc));
+
+		let total = Math.max(0, used.total - included.total);
+		let heavyOrBetter = Math.max(0, used.heavyOrBetter - included.heavyOrBetter);
+		let capital = Math.max(0, used.capital - included.capital);
+
+		return {
+			total,
+			heavyOrBetter,
+			capital,
+		};
+	};
+};
+
+config.getters.extraMountCosts = state => {
+	return arc => {
+		let costs = {
+			newMount: 3,
+			heavy: 4,
+			capital: 5,
+		};
+
+		if ( arc === "turret" ) {
+			costs = {
+				newMount: 5,
+				heavy: 6,
+				capital: 99999,
+			};
+		}
+
+		return costs;
+	};
+};
+
+config.getters.frameMounts = state => {
+	return arc => {
+		return state.currentShip.frame.mounts[arc] || [];
+	};
+};
+
+config.getters.costOfExtraMounts = state => {
+	return arc => {
+		let costs = config.getters.extraMountCosts(state)(arc);
+		let extraMounts = config.getters.extraMounts(state)(arc)();
+
+		return (extraMounts.total * costs.newMount)
+			+ (extraMounts.heavyOrBetter * costs.heavy)
+			+ (extraMounts.capital * costs.capital);
+	};
+};
+
+config.getters.usedMounts = state => {
+	return arc => {
+		let weapons = state.currentShip.weapons[arc];
+		let mounts = [];
+
+		weapons.forEach(weapon => {
+			mounts.push(weaponClassToMountInt[weapon.class]);
+
+			// Linked weapons take up two slots
+			if ( weapon.linked ) {
+				mounts.push(weaponClassToMountInt[weapon.class]);
+			}
+		});
+		return mounts;
+	};
 };
 
 const store = new Vuex.Store(config);
