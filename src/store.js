@@ -438,7 +438,7 @@ config.getters.extraMountCosts = state => {
 
 config.getters.frameMounts = state => {
 	return arc => {
-		return state.currentShip.frame.mounts[arc] || [];
+		return state.currentShip.frame && state.currentShip.frame.mounts[arc] || [];
 	};
 };
 

@@ -59,7 +59,7 @@ export default {
 			Slots available: {{ remainingSlots }} / {{ maxSlots }}
 
 			<div
-				class="expansion-bays--expansionBay"
+				class="expansion-bays--expansion-bay"
 				v-for="expansionBay in selectedExpansionBays"
 				@click="showExpansionBayOptionsModal(expansionBay)"
 			>
@@ -78,6 +78,15 @@ export default {
 
 <style lang="scss">
 .expansion-bays {
+	.expansion-bays--expansion-bay {
+		padding: 5px 0;
+
+		&:hover {
+			background-color: #ccc;
+			cursor: pointer;
+		}
+	}
+
 	.expansion-bays--expansion-bay-title {
 		font-weight: bold;
 	}

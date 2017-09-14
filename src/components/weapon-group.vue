@@ -209,6 +209,11 @@ export default {
 
 	.weapon-group--weapon {
 		padding: 5px 0;
+
+		&:hover {
+			background-color: #ccc;
+			cursor: pointer;
+		}
 	}
 	
 	.weapon-group--weapon-title {

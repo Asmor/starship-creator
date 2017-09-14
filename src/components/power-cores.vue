@@ -82,6 +82,15 @@ export default {
 
 <style lang="scss">
 .power-cores {
+	.power-cores--power-core {
+		padding: 5px 0;
+
+		&:hover {
+			background-color: #ccc;
+			cursor: pointer;
+		}
+	}
+
 	.power-cores--power-core-title {
 		font-weight: bold;
 	}

@@ -36,6 +36,11 @@ export default {
 			let item = this.selectedItem;
 
 			this.columns.forEach(col => {
+				// Name is included separately
+				if ( col.key === "name" ) {
+					return;
+				}
+
 				let value = this.getValue({ item, col });
 
 				if ( col.hideIfZero && this.isZero(item[col.key]) ) {
@@ -43,11 +48,6 @@ export default {
 				}
 
 				let part = col.name + " " + value;
-
-				// We don't label the name
-				if ( col.key === "name" ) {
-					part = value;
-				}
 
 				if ( col.addendum ) {
 					part += " (" + col.addendum + ")";
@@ -133,7 +133,12 @@ export default {
 			:title="title"
 			v-b-modal="modalId"
 		>
-			{{ selectedText }}
+			<div class="single-selector--item-name">
+				{{ selectedItem.name }}
+			</div>
+			<span class="single-selector--item-description">
+				{{ selectedText }}
+			</span>
 		</single-item>
 
 		<b-modal
@@ -212,6 +217,15 @@ export default {
 		&.single-selector--frame-option__active {
 			background-color: #cfc;
 		}
+	}
+
+	.single-selector--item-name {
+		font-weight: bold;
+	}
+
+	.single-selector--item-description {
+		display: block;
+		margin-left: 10px;
 	}
 }
 

@@ -120,7 +120,7 @@ let shieldsSection = {
 	columns: [
 		{ name: "Shield", key: "name" },
 		{ name: "Total SP", key: "totalSp", hideIfZero: true, center: true },
-		{ name: "Regend (SP/min)", key: "regen", hideIfZero: true, center: true },
+		{ name: "Regen (SP/min)", key: "regen", hideIfZero: true, center: true },
 		{ name: "Cost", key: "cost", center: true },
 	],
 	items: shields,
