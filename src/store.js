@@ -5,6 +5,7 @@ import {
 	nameSort,
 	pluralize,
 	sizeToInt,
+	weaponArcs,
 	weaponClassToInt,
 	weaponClassToMountInt,
 } from "./util.js";
@@ -341,12 +342,12 @@ config.getters.usedPcu = state => {
 	});
 
 	[
-		ship.computer,
-		ship.sensors,
-		ship.thrusters,
 		ship.armor,
+		ship.computer,
 		ship.defenses,
+		ship.sensors,
 		ship.shields,
+		ship.thrusters,
 	].forEach(item => {
 		if ( item && item.pcu ) {
 			pcu += item.pcu;
@@ -354,6 +355,48 @@ config.getters.usedPcu = state => {
 	});
 
 	return pcu;
+};
+
+config.getters.usedBuildPoints = state => {
+	let points = 0;
+
+	let ship = state.currentShip;
+	let shipSizeInt = sizeToInt[ship.frame.size];
+
+	ship.powerCores.forEach(core => points += core.cost);
+	ship.expansionBays.forEach(bay => points += bay.cost);
+
+	// Items with static cost
+	[
+		ship.computer,
+		ship.defenses,
+		ship.frame,
+		ship.sensors,
+		ship.shields,
+		ship.thrusters,
+	].forEach(item => {
+		if ( item && item.cost ) {
+			points += item.cost;
+		}
+	});
+
+	// Items with cost based on ship size
+	[
+		ship.armor,
+		ship.driftEngine,
+	].forEach(item => {
+		if ( item && item.cost ) {
+			points += item.cost * shipSizeInt;
+		}
+	});
+
+	weaponArcs.forEach(arc => {
+		ship.weapons[arc].forEach(weapon => points += weapon.cost);
+
+		points += config.getters.costOfExtraMounts(state)(arc);
+	});
+
+	return points;
 };
 
 config.getters.extraMounts = state => {
@@ -402,7 +445,7 @@ config.getters.frameMounts = state => {
 config.getters.costOfExtraMounts = state => {
 	return arc => {
 		let costs = config.getters.extraMountCosts(state)(arc);
-		let extraMounts = config.getters.extraMounts(state)(arc)();
+		let extraMounts = config.getters.extraMounts(state)(arc);
 
 		return (extraMounts.total * costs.newMount)
 			+ (extraMounts.heavyOrBetter * costs.heavy)

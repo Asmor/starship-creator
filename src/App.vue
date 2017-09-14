@@ -171,6 +171,9 @@ export default {
 		availablePcu: function () {
 			return this.$store.getters.availablePcu;
 		},
+		usedBuildPoints: function () {
+			return this.$store.getters.usedBuildPoints;
+		},
 		usedPcu: function () {
 			return this.$store.getters.usedPcu;
 		},
@@ -208,7 +211,12 @@ export default {
 						'app--pcu-usage__error': usedPcu > availablePcu
 					}"
 				>
-					PCU Usage: {{ usedPcu }} / {{ availablePcu }}
+					[PCU {{ usedPcu }} / {{ availablePcu }}]
+				</span>
+			</b-nav-text>
+			<b-nav-text>
+				<span class="app--build-point-usage">
+					[BP: {{ usedBuildPoints }}]
 				</span>
 			</b-nav-text>
 		</b-navbar>
@@ -355,6 +363,10 @@ export default {
 
 	.app--pcu-usage__error {
 		color: red;
+	}
+
+	.app--build-point-usage {
+		margin: 0 10px;
 	}
 }
 </style>

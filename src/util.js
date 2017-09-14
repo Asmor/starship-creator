@@ -106,6 +106,8 @@ const expansionBayCalculations = {
 	},
 };
 
+const weaponArcs = "forward port starboard aft turret".split(" ");
+
 export {
 	expansionBayCalculations,
 	groupBy,
@@ -115,6 +117,7 @@ export {
 	rangeToInt,
 	sizeToInt,
 	sortBy,
+	weaponArcs,
 	weaponClassToInt,
 	weaponClassToMountInt,
 }
